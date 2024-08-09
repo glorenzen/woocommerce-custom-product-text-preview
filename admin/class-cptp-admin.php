@@ -26,15 +26,17 @@ class CPTP_Admin {
     public function register_settings() {
         register_setting('cptp_settings_group', 'cptp_x_coordinate');
         register_setting('cptp_settings_group', 'cptp_y_coordinate');
+        register_setting('cptp_settings_group', 'cptp_circle_width');
         register_setting('cptp_settings_group', 'cptp_preview_image');
-
+        register_setting('cptp_settings_group', 'cptp_custom_text');
+    
         add_settings_section(
             'cptp_settings_section',
             'Global Customization Settings',
             null,
             'cptp-settings'
         );
-
+    
         add_settings_field(
             'cptp_x_coordinate',
             'X-Coordinate',
@@ -42,7 +44,7 @@ class CPTP_Admin {
             'cptp-settings',
             'cptp_settings_section'
         );
-
+    
         add_settings_field(
             'cptp_y_coordinate',
             'Y-Coordinate',
@@ -52,9 +54,25 @@ class CPTP_Admin {
         );
 
         add_settings_field(
+            'cptp_circle_width',
+            'Circle Width',
+            array($this, 'circle_width_callback'),
+            'cptp-settings',
+            'cptp_settings_section'
+        );
+    
+        add_settings_field(
             'cptp_preview_image',
             'Preview Image',
             array($this, 'preview_image_callback'),
+            'cptp-settings',
+            'cptp_settings_section'
+        );
+    
+        add_settings_field(
+            'cptp_custom_text',
+            'Custom Text',
+            array($this, 'custom_text_callback'),
             'cptp-settings',
             'cptp_settings_section'
         );
@@ -74,10 +92,20 @@ class CPTP_Admin {
         echo '<input type="number" name="cptp_y_coordinate" value="' . esc_attr($y_coordinate) . '" />';
     }
 
+    public function circle_width_callback() {
+        $circle_width = get_option('cptp_circle_width');
+        echo '<input type="number" name="cptp_circle_width" value="' . esc_attr($circle_width) . '" />';
+    }
+
     public function preview_image_callback() {
         $preview_image = get_option('cptp_preview_image');
         echo '<input type="text" name="cptp_preview_image" value="' . esc_attr($preview_image) . '" />';
         echo '<button class="button cptp-upload-button">Add Preview Image</button>';
+    }
+
+    public function custom_text_callback() {
+        $custom_text = get_option('cptp_custom_text');
+        echo '<input type="text" name="cptp_custom_text" value="' . esc_attr($custom_text) . '" />';
     }
 
     public function enqueue_admin_scripts() {
