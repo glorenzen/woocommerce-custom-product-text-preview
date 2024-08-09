@@ -4,6 +4,25 @@ jQuery(document).ready(function($) {
     let wp_media_post_id = wp.media.model.settings.post.id; // Store the old id
     let set_to_post_id = 0; // Set this
 
+    const canvas = new fabric.Canvas('cptp-preview-canvas');
+
+    // Function to load image into canvas
+    function loadImageToCanvas(url) {
+        fabric.Image.fromURL(url, function(img) {
+            canvas.clear();
+            img.scaleToWidth(canvas.width);
+            img.scaleToHeight(canvas.height);
+            canvas.add(img);
+            canvas.renderAll();
+        });
+    }
+
+    // Load the image on screen load if URL is present
+    let initialImageUrl = $('input[name="cptp_preview_image"]').val();
+    if (initialImageUrl) {
+        loadImageToCanvas(initialImageUrl);
+    }
+
     jQuery('.cptp-upload-button').on('click', function(event) {
         event.preventDefault();
 
@@ -21,11 +40,11 @@ jQuery(document).ready(function($) {
 
         // Create the media frame.
         file_frame = wp.media.frames.file_frame = wp.media({
-            title: 'Select A Preview Image',
+            title: 'Select an image to upload',
             button: {
                 text: 'Use this image',
             },
-            multiple: false // Set to true to allow multiple files to be selected
+            multiple: false // Only allow one file to be uploaded
         });
 
         // When an image is selected, run a callback.
@@ -35,6 +54,9 @@ jQuery(document).ready(function($) {
 
             // Do something with attachment.id and/or attachment.url here
             $('input[name="cptp_preview_image"]').val(attachment.url);
+
+            // Load the image into the Fabric.js canvas
+            loadImageToCanvas(attachment.url);
 
             // Restore the main post ID
             wp.media.model.settings.post.id = wp_media_post_id;
