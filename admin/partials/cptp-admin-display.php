@@ -11,6 +11,7 @@
         </form>
         <div style="flex: 1; padding-left: 20px;">
             <h2>Preview</h2>
+            <p id="image-size"></p>
             <canvas id="cptp-preview-canvas" width="500" height="500" style="border:1px solid #000;"></canvas>
         </div>
     </div>

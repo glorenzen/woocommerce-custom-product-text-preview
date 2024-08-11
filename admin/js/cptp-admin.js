@@ -10,6 +10,8 @@ jQuery(document).ready(function($) {
         scaleX = canvas.width / imgElement.width;
         scaleY = canvas.height / imgElement.height;
 
+        $('#image-size').text(`Image Size: ${imgElement.width}x${imgElement.height}`);
+
         const imgInstance = new fabric.Image(imgElement, {
             left: 0,
             top: 0,
