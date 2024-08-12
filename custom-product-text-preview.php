@@ -18,6 +18,7 @@ define('CPTP_PLUGIN_URL', plugin_dir_url(__FILE__));
 
 // Include required files
 require_once CPTP_PLUGIN_DIR . 'admin/class-cptp-admin.php';
+require_once CPTP_PLUGIN_DIR . 'includes/product-acf-fields.php';
 
 // Activation and deactivation hooks
 register_activation_hook(__FILE__, 'cptp_activate_plugin');
