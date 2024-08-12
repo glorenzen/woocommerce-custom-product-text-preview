@@ -7,7 +7,6 @@
             do_settings_sections('cptp-settings');
             submit_button();
             ?>
-            <button type="button" id="render-button" class="button">Render Text</button>
         </form>
         <div style="flex: 1; padding-left: 20px;">
             <h2>Preview</h2>

@@ -29,6 +29,10 @@ class CPTP_Admin {
         register_setting('cptp_settings_group', 'cptp_circle_width');
         register_setting('cptp_settings_group', 'cptp_preview_image');
         register_setting('cptp_settings_group', 'cptp_custom_text');
+        register_setting('cptp_settings_group', 'cptp_font_size');
+        register_setting('cptp_settings_group', 'cptp_font_family');
+        register_setting('cptp_settings_group', 'cptp_font_color');
+        register_setting('cptp_settings_group', 'cptp_circle_color');
     
         add_settings_section(
             'cptp_settings_section',
@@ -76,6 +80,38 @@ class CPTP_Admin {
             'cptp-settings',
             'cptp_settings_section'
         );
+
+        add_settings_field(
+            'cptp_font_size',
+            'Font Size',
+            array($this, 'font_size_callback'),
+            'cptp-settings',
+            'cptp_settings_section'
+        );
+
+        add_settings_field(
+            'cptp_font_family',
+            'Font Family',
+            array($this, 'font_family_callback'),
+            'cptp-settings',
+            'cptp_settings_section'
+        );
+
+        add_settings_field(
+            'cptp_font_color',
+            'Font Color',
+            array($this, 'font_color_callback'),
+            'cptp-settings',
+            'cptp_settings_section'
+        );
+
+        add_settings_field(
+            'cptp_circle_color',
+            'Circle Color',
+            array($this, 'circle_color_callback'),
+            'cptp-settings',
+            'cptp_settings_section'
+        );
     }
 
     public function create_admin_page() {
@@ -106,6 +142,26 @@ class CPTP_Admin {
     public function custom_text_callback() {
         $custom_text = get_option('cptp_custom_text');
         echo '<input type="text" name="cptp_custom_text" value="' . esc_attr($custom_text) . '" />';
+    }
+
+    public function font_size_callback() {
+        $value = get_option('cptp_font_size', '');
+        echo '<input type="number" id="cptp_font_size" name="cptp_font_size" value="' . esc_attr($value) . '" />';
+    }
+
+    public function font_family_callback() {
+        $value = get_option('cptp_font_family', '');
+        echo '<input type="text" id="cptp_font_family" name="cptp_font_family" value="' . esc_attr($value) . '" />';
+    }
+
+    public function font_color_callback() {
+        $value = get_option('cptp_font_color', '');
+        echo '<input type="color" id="cptp_font_color" name="cptp_font_color" value="' . esc_attr($value) . '" />';
+    }
+
+    public function circle_color_callback() {
+        $value = get_option('cptp_circle_color', '');
+        echo '<input type="color" id="cptp_circle_color" name="cptp_circle_color" value="' . esc_attr($value) . '" />';
     }
 
     public function enqueue_admin_scripts() {
