@@ -18,6 +18,7 @@ define('CPTP_PLUGIN_URL', plugin_dir_url(__FILE__));
 
 // Include required files
 require_once CPTP_PLUGIN_DIR . 'admin/class-cptp-admin.php';
+require_once CPTP_PLUGIN_DIR . 'public/class-cptp-public.php';
 require_once CPTP_PLUGIN_DIR . 'includes/product-acf-fields.php';
 
 // Activation and deactivation hooks
@@ -49,7 +50,7 @@ function cptp_init_plugin() {
     if (is_admin()) {
         new CPTP_Admin();
     } else {
-        // Include front-end functionality
+        new CPTP_Public();
     }
 }
 add_action('plugins_loaded', 'cptp_init_plugin');
