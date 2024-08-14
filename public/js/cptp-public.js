@@ -78,7 +78,7 @@ jQuery(document).ready(function ($) {
                         canvas.add(image);
                         
                         const canvasSettings = {
-                            customText: settings.custom_text,
+                            customText: $("#cptp-custom-text").val(),
                             xCoordinate: settings.x_coordinate,
                             yCoordinate: settings.y_coordinate,
                             circleWidth: settings.circle_width,
