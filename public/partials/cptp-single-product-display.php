@@ -11,6 +11,14 @@ if (get_field('has_custom_text')) {
             <button id="cptp-preview-text-button" class="cptp-button">Preview Text</button>
         </div>
     </div>
+
+    <!-- Preview Image Modal -->
+    <div id="cptp-preview-modal" class="cptp-modal">
+        <div class="cptp-modal-content">
+            <span class="cptp-close">&times;</span>
+            <canvas id="cptp-canvas" width="500" height="500"></canvas>
+        </div>
+    </div>
     <?php
 }
 ?>
