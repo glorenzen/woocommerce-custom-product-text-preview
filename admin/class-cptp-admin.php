@@ -166,6 +166,6 @@ class CPTP_Admin {
 
     public function enqueue_admin_scripts() {
         wp_enqueue_media();
-        wp_enqueue_script('cptp-admin-js', CPTP_PLUGIN_URL . 'admin/js/cptp-admin.js', array('jquery'), null, true);
+        wp_enqueue_script('cptp-admin-js', CPTP_PLUGIN_URL . 'admin/js/cptp-admin.js', array('jquery'), date("h:i:s"), true);
     }
 }

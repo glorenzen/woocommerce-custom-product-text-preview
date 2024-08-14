@@ -7,59 +7,17 @@ jQuery(document).ready(function($) {
     let scaleX, scaleY;
 
     function updateCanvas() {
-        const text = $('input[name="cptp_custom_text"]').val();
-        const x = parseInt($('input[name="cptp_x_coordinate"]').val(), 10) || imgElement.width / 2;
-        const y = parseInt($('input[name="cptp_y_coordinate"]').val(), 10) || imgElement.height / 2;
-        const circleWidth = parseInt($('input[name="cptp_circle_width"]').val(), 10) || 200;
-        const fontSize = parseInt($('input[name="cptp_font_size"]').val(), 10) || 50;
-        const fontColor = $('input[name="cptp_font_color"]').val() || '#000000';
-        const circleColor = $('input[name="cptp_circle_color"]').val() || '#FFFFFF';
+        const settings = {
+            customText: $('input[name="cptp_custom_text"]').val(),
+            xCoordinate: $('input[name="cptp_x_coordinate"]').val(),
+            yCoordinate: $('input[name="cptp_y_coordinate"]').val(),
+            circleWidth: $('input[name="cptp_circle_width"]').val(),
+            fontSize: $('input[name="cptp_font_size"]').val(),
+            fontColor: $('input[name="cptp_font_color"]').val(),
+            circleColor: $('input[name="cptp_circle_color"]').val()
+        };
 
-        canvas.getObjects().forEach((obj) => {
-            if (obj.type === 'text' || obj.type === 'path') {
-                canvas.remove(obj);
-            }
-        });
-
-        const scaledX = x * scaleX;
-        const scaledY = y * scaleY;
-
-        const radius = circleWidth / 2;
-        const pathData = `M ${scaledX - radius}, ${scaledY} a ${radius},${radius} 0 1,0 ${circleWidth},0`;
-
-        const halfCirclePath = new fabric.Path(pathData, {
-            fill: '',
-            stroke: circleColor, 
-            selectable: false,
-            originX: 'center',
-            left: scaledX,
-            top: scaledY,
-        });
-
-        const pathInfo = fabric.util.getPathSegmentsInfo(halfCirclePath.path);
-        halfCirclePath.segmentsInfo = pathInfo;
-
-        const textInstance = new fabric.Text(text, {
-            fontSize: fontSize,
-            fill: fontColor,
-            textAlign: 'center',
-            originX: 'center',
-            path: halfCirclePath,
-            pathSide: 'left',
-            pathAlign: 'center',
-            pathOffset: radius,
-        });
-
-        textInstance.set({
-            left: scaledX,
-            top: scaledY,
-        });
-
-        textInstance.setCoords();
-
-        canvas.add(halfCirclePath);
-        canvas.add(textInstance);
-        canvas.renderAll();
+        renderCanvas(canvas, imgElement, settings, { showCircle: true });
     }
 
     imgElement.onload = () => {
