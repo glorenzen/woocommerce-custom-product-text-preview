@@ -39,12 +39,24 @@ function enqueue_fabric() {
     wp_enqueue_script('fabric');
 }
 
+function enqueue_utils() {
+    wp_register_script('cptp-canvas-utils', CPTP_PLUGIN_URL . 'utils/canvas-utils.js', array('jquery'), null, true);
+    wp_enqueue_script('cptp-canvas-utils');
+}
+
 function enqueue_admin_scripts() {
     enqueue_fabric();
+    enqueue_utils();
+}
+
+function enqueue_public_scripts() {
+    enqueue_fabric();
+    enqueue_utils();
 }
 
 // Enqueue scripts
 add_action('admin_enqueue_scripts', 'enqueue_admin_scripts');
+add_action('wp_enqueue_scripts', 'enqueue_public_scripts');
 
 // Initialize the plugin
 function cptp_init_plugin() {
