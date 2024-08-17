@@ -14,6 +14,7 @@ jQuery(document).ready(function($) {
             circleWidth: $('input[name="cptp_circle_width"]').val(),
             fontSize: $('input[name="cptp_font_size"]').val(),
             fontColor: $('input[name="cptp_font_color"]').val(),
+            fontFamily: $('select[name="cptp_font_family"]').val() || 'Open Sans',
             circleColor: $('input[name="cptp_circle_color"]').val()
         };
 
@@ -66,5 +67,5 @@ jQuery(document).ready(function($) {
         file_frame.open();
     });
 
-    $('input[name="cptp_custom_text"], input[name="cptp_x_coordinate"], input[name="cptp_y_coordinate"], input[name="cptp_circle_width"], input[name="cptp_font_size"], input[name="cptp_font_color"], input[name="cptp_circle_color"]').on('input', updateCanvas);
+    $('input[name="cptp_custom_text"], input[name="cptp_x_coordinate"], input[name="cptp_y_coordinate"], input[name="cptp_circle_width"], input[name="cptp_font_size"], input[name="cptp_font_color"], select[name="cptp_font_family"], input[name="cptp_circle_color"]').on('input', updateCanvas);
 });

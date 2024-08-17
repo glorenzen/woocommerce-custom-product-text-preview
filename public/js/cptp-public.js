@@ -84,6 +84,7 @@ jQuery(document).ready(function ($) {
                             circleWidth: settings.circle_width,
                             fontSize: settings.font_size,
                             fontColor: settings.font_color,
+                            fontFamily: settings.font_family || "Open Sans",
                             circleColor: settings.circle_color
                         };
 

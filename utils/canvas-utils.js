@@ -10,6 +10,7 @@
  * @param {number} [settings.circleWidth=200] - The width of the circle overlay.
  * @param {number} [settings.fontSize=50] - The font size of the text.
  * @param {string} [settings.fontColor='#000000'] - The color of the text.
+ * @param {string} [settings.fontFamily='Open Sans'] - The font family of the text.
  * @param {string} [settings.circleColor='#FFFFFF'] - The color of the circle overlay.
  * @param {Object} [options={ showCircle: true }] - The options for rendering.
  * @param {boolean} [options.showCircle=true] - Whether to show the circle overlay or not.
@@ -27,6 +28,7 @@ function renderCanvas(canvas, imgElement, settings, options = { showCircle: true
     const circleWidth = parseInt(settings.circleWidth, 10) || 200;
     const fontSize = parseInt(settings.fontSize, 10) || 50;
     const fontColor = settings.fontColor || '#000000';
+    const fontFamily = settings.fontFamily || 'Open Sans';
     const circleColor = settings.circleColor || '#FFFFFF';
 
     // Remove any existing text or path objects from the canvas
@@ -82,8 +84,22 @@ function renderCanvas(canvas, imgElement, settings, options = { showCircle: true
 
     // Add the half circle path and text object to the canvas
     canvas.add(halfCirclePath);
-    canvas.add(textInstance);
 
-    // Render the canvas
-    canvas.renderAll();
+    // Load the font and then add the text object to the canvas
+    loadAndUse(fontFamily, canvas, textInstance);
+}
+
+function loadAndUse(font, canvas, textInstance) {
+    const myfont = new FontFaceObserver(font);
+    myfont.load()
+        .then(function() {
+            // When font is loaded, use it.
+            textInstance.set("fontFamily", font);
+            canvas.add(textInstance);
+            console.log(font + ' is available');
+            canvas.requestRenderAll();
+        }).catch(function(e) {
+            console.log(e);
+            console.error('Font loading failed: ' + font);
+        });
 }

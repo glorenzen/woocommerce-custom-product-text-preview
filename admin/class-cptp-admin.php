@@ -150,8 +150,16 @@ class CPTP_Admin {
     }
 
     public function font_family_callback() {
-        $value = get_option('cptp_font_family', '');
-        echo '<input type="text" id="cptp_font_family" name="cptp_font_family" value="' . esc_attr($value) . '" />';
+        $fonts = array(
+            'Open Sans', 'Courier New', 'Georgia', 'Times New Roman', 'Verdana', 'Roboto'
+        );
+        $selected_font = get_option('cptp_font_family', 'Open Sans');
+        echo '<select name="cptp_font_family">';
+        foreach ($fonts as $font) {
+            $selected = ($selected_font === $font) ? 'selected' : '';
+            echo "<option value='$font' $selected>$font</option>";
+        }
+        echo '</select>';
     }
 
     public function font_color_callback() {
@@ -166,6 +174,7 @@ class CPTP_Admin {
 
     public function enqueue_admin_scripts() {
         wp_enqueue_media();
-        wp_enqueue_script('cptp-admin-js', CPTP_PLUGIN_URL . 'admin/js/cptp-admin.js', array('jquery'), date("h:i:s"), true);
+        wp_enqueue_style('cptp-admin', CPTP_PLUGIN_URL . 'admin/css/cptp-admin.css');
+        wp_enqueue_script('cptp-admin', CPTP_PLUGIN_URL . 'admin/js/cptp-admin.js', array('jquery'), date("h:i:s"), true);
     }
 }

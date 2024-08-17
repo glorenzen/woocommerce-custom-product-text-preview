@@ -44,14 +44,21 @@ function enqueue_utils() {
     wp_enqueue_script('cptp-canvas-utils');
 }
 
+function enequeue_fontfaceobserver() {
+    wp_register_script('fontfaceobserver', 'https://cdnjs.cloudflare.com/ajax/libs/fontfaceobserver/2.1.0/fontfaceobserver.standalone.js', null, null, true);
+    wp_enqueue_script('fontfaceobserver');
+}
+
 function enqueue_admin_scripts() {
     enqueue_fabric();
     enqueue_utils();
+    enequeue_fontfaceobserver();
 }
 
 function enqueue_public_scripts() {
     enqueue_fabric();
     enqueue_utils();
+    enequeue_fontfaceobserver();
 }
 
 // Enqueue scripts
