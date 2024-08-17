@@ -111,4 +111,13 @@ jQuery(document).ready(function ($) {
             modal.hide();
         }
     });
+
+    // Capture custom text value on add to cart
+    $("form.cart").on("submit", function () {
+        let customText = $(".cptp-product-custom-text input").val();
+        $("<input />").attr("type", "hidden")
+            .attr("name", "cptp_custom_text")
+            .attr("value", customText)
+            .appendTo(this);
+    });
 });
