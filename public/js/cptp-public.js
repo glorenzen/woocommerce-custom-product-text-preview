@@ -46,6 +46,7 @@ jQuery(document).ready(function ($) {
     });
 
     const modal = $("#cptp-preview-modal");
+    const canvas = new fabric.Canvas("cptp-canvas");
 
     $("#cptp-preview-text-button").click(function (event) {
         event.preventDefault();
@@ -61,8 +62,6 @@ jQuery(document).ready(function ($) {
             success: function (response) {
                 if (response.success) {
                     const featuredImage = response.data;
-
-                    const canvas = new fabric.Canvas("cptp-canvas");
                     const imgElement = new Image();
                     imgElement.src = featuredImage;
 
