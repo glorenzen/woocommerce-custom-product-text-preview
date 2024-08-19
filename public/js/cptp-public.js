@@ -1,4 +1,7 @@
 jQuery(document).ready(function ($) {
+    const canvas = new fabric.Canvas("cptp-canvas");
+    const modal = $("#cptp-preview-modal");
+
     function checkVariationsSelected() {
         let allSelected = true;
         $(".variations select").each(function () {
@@ -15,6 +18,17 @@ jQuery(document).ready(function ($) {
         } else {
             $(".cptp-product-custom-text").hide();
         }
+    }
+
+    function resizeCanvas() {
+        const outerCanvasContainer = $('.cptp-modal-content');
+        const ratio          = canvas.getWidth() / canvas.getHeight();
+        const containerWidth = outerCanvasContainer.width();
+        const scale          = containerWidth / canvas.getWidth();
+        const zoom           = canvas.getZoom() * scale;
+
+        canvas.setDimensions({ width: containerWidth, height: containerWidth / ratio });
+        canvas.setViewportTransform([zoom, 0, 0, zoom, 0, 0]);
     }
 
     // Check variations on change
@@ -44,9 +58,6 @@ jQuery(document).ready(function ($) {
             alert('An error occurred while fetching the settings.');
         }
     });
-
-    const modal = $("#cptp-preview-modal");
-    const canvas = new fabric.Canvas("cptp-canvas");
 
     $("#cptp-preview-text-button").click(function (event) {
         event.preventDefault();
@@ -90,6 +101,8 @@ jQuery(document).ready(function ($) {
                         renderCanvas(canvas, imgElement, canvasSettings, { showCircle: false });
 
                         modal.show();
+
+                        resizeCanvas();
                     };
                 } else {
                     alert("Error: " + response.data);
