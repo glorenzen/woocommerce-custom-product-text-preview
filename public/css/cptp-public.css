@@ -89,8 +89,10 @@
 }
 
 .cptp-close {
-    color: #aaa;
-    float: right;
+    color: #bbb;
+    position: absolute;
+    top: 10%;
+    right: 10px;
     font-size: 28px;
     font-weight: bold;
 }
