@@ -14,12 +14,14 @@
  * @param {string} [settings.circleColor='#FFFFFF'] - The color of the circle overlay.
  * @param {Object} [options={ showCircle: true }] - The options for rendering.
  * @param {boolean} [options.showCircle=true] - Whether to show the circle overlay or not.
+ * @param {number} initialCanvasWidth - The initial width of the canvas.
+ * @param {number} initialCanvasHeight - The initial height of the canvas.
  * @returns {void}
  */
-function renderCanvas(canvas, imgElement, settings, options = { showCircle: true }) {
-    // Calculate the scaling factors for the canvas based on the image dimensions
-    const scaleX = canvas.width / imgElement.width;
-    const scaleY = canvas.height / imgElement.height;
+function renderCanvas(canvas, imgElement, settings, options = { showCircle: true }, initialCanvasWidth, initialCanvasHeight) {
+    // Calculate the scaling factors for the canvas based on the initial image dimensions
+    const scaleX = initialCanvasWidth ? initialCanvasWidth / imgElement.width : canvas.width / imgElement.width;
+    const scaleY = initialCanvasHeight ? initialCanvasHeight / imgElement.height : canvas.height / imgElement.height;
 
     // Extract the settings values or use default values if not provided
     const text = settings.customText || '';

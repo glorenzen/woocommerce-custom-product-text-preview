@@ -1,5 +1,7 @@
 jQuery(document).ready(function ($) {
     const canvas = new fabric.Canvas("cptp-canvas");
+    const initialCanvasWidth = canvas.width;
+    const initialCanvasHeight = canvas.height;
     const modal = $("#cptp-preview-modal");
 
     function checkVariationsSelected() {
@@ -72,6 +74,8 @@ jQuery(document).ready(function ($) {
             },
             success: function (response) {
                 if (response.success) {
+                    canvas.clear();
+
                     const featuredImage = response.data;
                     const imgElement = new Image();
                     imgElement.src = featuredImage;
@@ -81,8 +85,8 @@ jQuery(document).ready(function ($) {
                             left: 0,
                             top: 0,
                             selectable: false,
-                            scaleX: canvas.width / imgElement.width,
-                            scaleY: canvas.height / imgElement.height,
+                            scaleX: initialCanvasWidth / imgElement.width,
+                            scaleY: initialCanvasHeight / imgElement.height,
                         });
 
                         canvas.add(image);
@@ -98,10 +102,9 @@ jQuery(document).ready(function ($) {
                             circleColor: settings.circle_color
                         };
 
-                        renderCanvas(canvas, imgElement, canvasSettings, { showCircle: false });
+                        renderCanvas(canvas, imgElement, canvasSettings, { showCircle: false }, initialCanvasWidth, initialCanvasHeight);
 
                         modal.show();
-
                         resizeCanvas();
                     };
                 } else {
