@@ -1,8 +1,15 @@
 <?php
 class CPTP_Public {
     public function __construct() {
+        // Enqueue public scripts and styles
         add_action('wp_enqueue_scripts', array($this, 'enqueue_public_scripts'));
+
+        // Render custom text input on single product page
         add_action('woocommerce_before_add_to_cart_button', array($this, 'render_single_product_display'), 25);
+
+        // WooCommerce hooks for custom text functionality
+        add_filter('woocommerce_add_cart_item_data', array($this, 'add_custom_text_to_cart_item'), 10, 2);
+        add_filter('woocommerce_get_item_data', array($this, 'display_custom_text_in_cart'), 10, 2);
     }
 
     public function enqueue_public_scripts() {
@@ -16,5 +23,22 @@ class CPTP_Public {
 
     public function render_single_product_display() {
         include plugin_dir_path(__FILE__) . 'partials/cptp-single-product-display.php';
+    }
+
+    public function add_custom_text_to_cart_item($cart_item_data, $product_id) {
+        if (isset($_POST['cptp_custom_text'])) {
+            $cart_item_data['cptp_custom_text'] = sanitize_text_field($_POST['cptp_custom_text']);
+        }
+        return $cart_item_data;
+    }
+
+    public function display_custom_text_in_cart($item_data, $cart_item) {
+        if (isset($cart_item['cptp_custom_text'])) {
+            $item_data[] = array(
+                'key' => __('Custom Text', 'cptp'),
+                'value' => wc_clean($cart_item['cptp_custom_text']),
+            );
+        }
+        return $item_data;
     }
 }
