@@ -4,6 +4,8 @@ if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly
 }
 
+require_once CPTP_PLUGIN_DIR . 'utils/utils.php';
+
 class CPTP_Admin {
 
     public function __construct() {
@@ -164,16 +166,8 @@ class CPTP_Admin {
     }
 
     public function font_family_callback() {
-        $fonts = array(
-            'Open Sans', 'Courier New', 'Georgia', 'Times New Roman', 'Verdana', 'Roboto'
-        );
         $selected_font = get_option('cptp_font_family', 'Open Sans');
-        echo '<select name="cptp_font_family">';
-        foreach ($fonts as $font) {
-            $selected = ($selected_font === $font) ? 'selected' : '';
-            echo "<option value='$font' $selected>$font</option>";
-        }
-        echo '</select>';
+        render_font_family_dropdown('cptp_font_family', $selected_font);
     }
 
     public function font_color_callback() {
