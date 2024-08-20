@@ -29,6 +29,7 @@ class CPTP_Admin {
         register_setting('cptp_settings_group', 'cptp_circle_width');
         register_setting('cptp_settings_group', 'cptp_preview_image');
         register_setting('cptp_settings_group', 'cptp_custom_text');
+        register_setting('cptp_settings_group', 'cptp_custom_text_max_length');
         register_setting('cptp_settings_group', 'cptp_font_size');
         register_setting('cptp_settings_group', 'cptp_font_family');
         register_setting('cptp_settings_group', 'cptp_font_color');
@@ -77,6 +78,14 @@ class CPTP_Admin {
             'cptp_custom_text',
             'Custom Text',
             array($this, 'custom_text_callback'),
+            'cptp-settings',
+            'cptp_settings_section'
+        );
+
+        add_settings_field(
+            'cptp_custom_text_max_length',
+            'Custom Text Max Length',
+            array($this, 'cptp_custom_text_max_length_callback'),
             'cptp-settings',
             'cptp_settings_section'
         );
@@ -142,6 +151,11 @@ class CPTP_Admin {
     public function custom_text_callback() {
         $custom_text = get_option('cptp_custom_text');
         echo '<input type="text" name="cptp_custom_text" value="' . esc_attr($custom_text) . '" />';
+    }
+
+    public function cptp_custom_text_max_length_callback() {
+        $value = get_option('cptp_custom_text_max_length', 20); // Default to 20 if not set
+        echo '<input type="number" id="cptp_custom_text_max_length" name="cptp_custom_text_max_length" value="' . esc_attr($value) . '" />';
     }
 
     public function font_size_callback() {
