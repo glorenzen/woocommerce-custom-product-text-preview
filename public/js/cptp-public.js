@@ -66,7 +66,7 @@ jQuery(document).ready(function ($) {
         const variationId = selectedVariationId;
 
         $.ajax({
-            url: cptp_ajax.ajax_url,
+            url: cptp_values.ajax_url,
             method: "POST",
             data: {
                 action: "get_featured_image",
@@ -96,9 +96,9 @@ jQuery(document).ready(function ($) {
                             xCoordinate: settings.x_coordinate,
                             yCoordinate: settings.y_coordinate,
                             circleWidth: settings.circle_width,
-                            fontSize: settings.font_size,
-                            fontColor: settings.font_color,
-                            fontFamily: settings.font_family || "Open Sans",
+                            fontSize: cptp_values.acf_fields.font_size || settings.font_size,
+                            fontColor: cptp_values.acf_fields.font_color || settings.font_color,
+                            fontFamily: cptp_values.acf_fields.font_family || settings.font_family || "Open Sans",
                             circleColor: settings.circle_color
                         };
 
