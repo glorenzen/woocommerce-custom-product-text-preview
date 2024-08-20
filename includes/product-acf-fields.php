@@ -1,6 +1,15 @@
 <?php
 if( function_exists('acf_add_local_field_group') ):
 
+require_once CPTP_PLUGIN_DIR . 'utils/utils.php';
+
+add_action('acf/render_field/name=font_family', 'acf_render_font_family_dropdown');
+
+function acf_render_font_family_dropdown($field) {
+    $selected_font = $field['value'];
+    render_font_family_dropdown($field['name'], $selected_font);
+}
+
 acf_add_local_field_group(array(
     'key' => 'group_product_custom_text',
     'title' => 'Product Custom Text Settings',
@@ -25,12 +34,10 @@ acf_add_local_field_group(array(
             'ui_off_text' => 'No',
         ),
         array(
-            'key' => 'field_font_color',
-            'label' => 'Font Color',
-            'name' => 'font_color',
-            'type' => 'color_picker',
-            'instructions' => '',
-            'required' => 0,
+            'key' => 'field_font_size_group',
+            'label' => 'Font Size Group',
+            'name' => 'font_size_group',
+            'type' => 'group',
             'conditional_logic' => array(
                 array(
                     array(
@@ -40,20 +47,36 @@ acf_add_local_field_group(array(
                     ),
                 ),
             ),
-            'wrapper' => array(
-                'width' => '',
-                'class' => '',
-                'id' => '',
+            'sub_fields' => array(
+                array(
+                    'key' => 'field_override_font_size',
+                    'label' => 'Override Font Size',
+                    'name' => 'override_font_size',
+                    'type' => 'true_false',
+                    'ui' => 1,
+                ),
+                array(
+                    'key' => 'field_font_size',
+                    'label' => 'Font Size',
+                    'name' => 'font_size',
+                    'type' => 'number',
+                    'conditional_logic' => array(
+                        array(
+                            array(
+                                'field' => 'field_override_font_size',
+                                'operator' => '==',
+                                'value' => '1',
+                            ),
+                        ),
+                    ),
+                ),
             ),
-            'default_value' => '',
         ),
         array(
-            'key' => 'field_font_family',
-            'label' => 'Font Family',
-            'name' => 'font_family',
-            'type' => 'text',
-            'instructions' => '',
-            'required' => 0,
+            'key' => 'field_font_family_group',
+            'label' => 'Font Family Group',
+            'name' => 'font_family_group',
+            'type' => 'group',
             'conditional_logic' => array(
                 array(
                     array(
@@ -63,24 +86,35 @@ acf_add_local_field_group(array(
                     ),
                 ),
             ),
-            'wrapper' => array(
-                'width' => '',
-                'class' => '',
-                'id' => '',
+            'sub_fields' => array(
+                array(
+                    'key' => 'field_override_font_family',
+                    'label' => 'Override Font Family',
+                    'name' => 'override_font_family',
+                    'type' => 'true_false',
+                    'ui' => 1,
+                ),
+                array(
+                    'key' => 'field_font_family',
+                    'label' => 'Font Family',
+                    'name' => 'font_family',
+                    'conditional_logic' => array(
+                        array(
+                            array(
+                                'field' => 'field_override_font_family',
+                                'operator' => '==',
+                                'value' => '1',
+                            ),
+                        ),
+                    ),
+                ),
             ),
-            'default_value' => '',
-            'placeholder' => '',
-            'prepend' => '',
-            'append' => '',
-            'maxlength' => '',
         ),
         array(
-            'key' => 'field_font_size',
-            'label' => 'Font Size',
-            'name' => 'font_size',
-            'type' => 'number',
-            'instructions' => '',
-            'required' => 0,
+            'key' => 'field_font_color_group',
+            'label' => 'Font Color Group',
+            'name' => 'font_color_group',
+            'type' => 'group',
             'conditional_logic' => array(
                 array(
                     array(
@@ -90,18 +124,30 @@ acf_add_local_field_group(array(
                     ),
                 ),
             ),
-            'wrapper' => array(
-                'width' => '',
-                'class' => '',
-                'id' => '',
+            'sub_fields' => array(
+                array(
+                    'key' => 'field_override_font_color',
+                    'label' => 'Override Font Color',
+                    'name' => 'override_font_color',
+                    'type' => 'true_false',
+                    'ui' => 1,
+                ),
+                array(
+                    'key' => 'field_font_color',
+                    'label' => 'Font Color',
+                    'name' => 'font_color',
+                    'type' => 'color_picker',
+                    'conditional_logic' => array(
+                        array(
+                            array(
+                                'field' => 'field_override_font_color',
+                                'operator' => '==',
+                                'value' => '1',
+                            ),
+                        ),
+                    ),
+                ),
             ),
-            'default_value' => '',
-            'placeholder' => '',
-            'prepend' => '',
-            'append' => '',
-            'min' => '',
-            'max' => '',
-            'step' => '',
         ),
     ),
     'location' => array(

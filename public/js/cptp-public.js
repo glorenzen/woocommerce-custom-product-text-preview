@@ -96,9 +96,9 @@ jQuery(document).ready(function ($) {
                             xCoordinate: settings.x_coordinate,
                             yCoordinate: settings.y_coordinate,
                             circleWidth: settings.circle_width,
-                            fontSize: cptp_values.acf_fields.font_size || settings.font_size,
-                            fontColor: cptp_values.acf_fields.font_color || settings.font_color,
-                            fontFamily: cptp_values.acf_fields.font_family || settings.font_family || "Open Sans",
+                            fontSize: cptp_values.acf_fields.font_size_group.override_font_size ? cptp_values.acf_fields.font_size_group.font_size : settings.font_size,
+                            fontColor: cptp_values.acf_fields.font_color_group.override_font_color ? cptp_values.acf_fields.font_color_group.font_color : settings.font_color,
+                            fontFamily: cptp_values.acf_fields.font_family_group.override_font_family ? cptp_values.acf_fields.font_family_group.font_family : settings.font_family || "Open Sans",
                             circleColor: settings.circle_color
                         };
 
