@@ -153,6 +153,7 @@ class CPTP_Admin {
     public function custom_text_callback() {
         $custom_text = get_option('cptp_custom_text');
         echo '<input type="text" name="cptp_custom_text" value="' . esc_attr($custom_text) . '" />';
+        echo '<p class="description">This text is for preview purposes only and will not be shown on the front end.</p>';
     }
 
     public function cptp_custom_text_max_length_callback() {
@@ -178,6 +179,7 @@ class CPTP_Admin {
     public function circle_color_callback() {
         $value = get_option('cptp_circle_color', '');
         echo '<input type="color" id="cptp_circle_color" name="cptp_circle_color" value="' . esc_attr($value) . '" />';
+        echo '<p class="description">This color is for preview purposes only and will not be shown on the front end.</p>';
     }
 
     public function enqueue_admin_scripts() {
