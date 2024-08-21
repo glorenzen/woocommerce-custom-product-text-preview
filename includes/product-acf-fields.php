@@ -35,7 +35,7 @@ acf_add_local_field_group(array(
         ),
         array(
             'key' => 'field_font_size_group',
-            'label' => 'Font Size Group',
+            'label' => 'Font Size',
             'name' => 'font_size_group',
             'type' => 'group',
             'conditional_logic' => array(
@@ -74,7 +74,7 @@ acf_add_local_field_group(array(
         ),
         array(
             'key' => 'field_font_family_group',
-            'label' => 'Font Family Group',
+            'label' => 'Font Family',
             'name' => 'font_family_group',
             'type' => 'group',
             'conditional_logic' => array(
@@ -112,7 +112,7 @@ acf_add_local_field_group(array(
         ),
         array(
             'key' => 'field_font_color_group',
-            'label' => 'Font Color Group',
+            'label' => 'Font Color',
             'name' => 'font_color_group',
             'type' => 'group',
             'conditional_logic' => array(
