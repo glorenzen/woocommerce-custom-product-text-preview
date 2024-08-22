@@ -14,7 +14,7 @@ jQuery(document).ready(function ($) {
         return allSelected;
     }
 
-    function toggleCustomTextField() {
+    function toggleCustomTextOptions() {
         if (checkVariationsSelected()) {
             $(".cptp-product-custom-text").show();
         } else {
@@ -39,13 +39,17 @@ jQuery(document).ready(function ($) {
         return fontFamily;
     }
 
+    function setNameFontFamily() {
+        return $('#name-font option:selected').text();
+    }
+
     // Check variations on change
     $(".variations select").change(function () {
-        toggleCustomTextField();
+        toggleCustomTextOptions();
     });
 
     // Initial check
-    toggleCustomTextField();
+    toggleCustomTextOptions();
 
     let selectedVariationId;
 
@@ -67,7 +71,7 @@ jQuery(document).ready(function ($) {
         }
     });
 
-    $("#cptp-preview-text-button").click(function (event) {
+    $("#cptp-preview-city-text-button").click(function (event) {
         event.preventDefault();
         const variationId = selectedVariationId;
 
@@ -98,7 +102,7 @@ jQuery(document).ready(function ($) {
                         canvas.add(image);
                         
                         const canvasSettings = {
-                            customText: $("#cptp-custom-text").val(),
+                            customText: $("#cptp-custom-city-text").val(),
                             xCoordinate: settings.x_coordinate,
                             yCoordinate: settings.y_coordinate,
                             circleWidth: settings.circle_width,
@@ -108,7 +112,7 @@ jQuery(document).ready(function ($) {
                             circleColor: settings.circle_color
                         };
 
-                        renderCanvas(canvas, imgElement, canvasSettings, { showCircle: false }, initialCanvasWidth, initialCanvasHeight);
+                        renderCanvas(canvas, imgElement, canvasSettings, { showCircle: false, renderOnCircle: true }, initialCanvasWidth, initialCanvasHeight);
 
                         modal.show();
                         resizeCanvas();
@@ -121,6 +125,42 @@ jQuery(document).ready(function ($) {
                 alert("An error occurred while fetching the featured image.");
             },
         });
+    });
+
+    $("#cptp-preview-name-text-button").click(function (event) {
+        event.preventDefault();
+        
+        const acfImage = cptp_values.acf_fields.field_name_text_preview_image.url;
+        const imgElement = new Image();
+        imgElement.src = acfImage;
+
+        imgElement.onload = () => {
+            canvas.clear();
+
+            const image = new fabric.Image(imgElement, {
+                left: 0,
+                top: 0,
+                selectable: false,
+                scaleX: initialCanvasWidth / imgElement.width,
+                scaleY: initialCanvasHeight / imgElement.height,
+            });
+
+            canvas.add(image);
+            
+            const canvasSettings = {
+                customText: $("#cptp-custom-name-text").val(),
+                xCoordinate: settings.x_coordinate,
+                yCoordinate: settings.y_coordinate,
+                fontSize: cptp_values.acf_fields.font_size_group.override_font_size ? cptp_values.acf_fields.font_size_group.font_size : settings.font_size,
+                fontColor: cptp_values.acf_fields.font_color_group.override_font_color ? cptp_values.acf_fields.font_color_group.font_color : settings.font_color,
+                fontFamily: setNameFontFamily(), 
+            };
+
+            renderCanvas(canvas, imgElement, canvasSettings, { showCircle: false, renderOnCircle: false }, initialCanvasWidth, initialCanvasHeight);
+
+            modal.show();
+            resizeCanvas();
+        };
     });
 
     $(".cptp-close").click(function () {
