@@ -39,17 +39,26 @@ class CPTP_Public {
     }
 
     public function add_custom_text_to_cart_item($cart_item_data, $product_id) {
-        if (isset($_POST['cptp_custom_text'])) {
-            $cart_item_data['cptp_custom_text'] = sanitize_text_field($_POST['cptp_custom_text']);
+        if (isset($_POST['cptp_custom_name_text'])) {
+            $cart_item_data['cptp_custom_name_text'] = sanitize_text_field($_POST['cptp_custom_name_text']);
+        }
+        if (isset($_POST['cptp_custom_city_text'])) {
+            $cart_item_data['cptp_custom_city_text'] = sanitize_text_field($_POST['cptp_custom_city_text']);
         }
         return $cart_item_data;
     }
 
     public function display_custom_text_in_cart($item_data, $cart_item) {
-        if (isset($cart_item['cptp_custom_text'])) {
+        if (isset($cart_item['cptp_custom_name_text'])) {
             $item_data[] = array(
-                'key' => __('Custom Text', 'cptp'),
-                'value' => wc_clean($cart_item['cptp_custom_text']),
+                'key' => __('Custom Name Text', 'cptp'),
+                'value' => wc_clean($cart_item['cptp_custom_name_text']),
+            );
+        }
+        if (isset($cart_item['cptp_custom_city_text'])) {
+            $item_data[] = array(
+                'key' => __('Custom Logo Text', 'cptp'),
+                'value' => wc_clean($cart_item['cptp_custom_city_text']),
             );
         }
         return $item_data;

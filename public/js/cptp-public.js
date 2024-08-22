@@ -174,10 +174,17 @@ jQuery(document).ready(function ($) {
 
     // Capture custom text value on add to cart
     $("form.cart").on("submit", function () {
-        let customText = $(".cptp-product-custom-text input").val();
+        let customCityText = $(".cptp-product-custom-text #cptp-custom-city-text").val();
+        let customNameText = $(".cptp-product-custom-text #cptp-custom-name-text").val();
+
         $("<input />").attr("type", "hidden")
-            .attr("name", "cptp_custom_text")
-            .attr("value", customText)
+            .attr("name", "cptp_custom_city_text")
+            .attr("value", customCityText)
+            .appendTo(this);
+
+        $("<input />").attr("type", "hidden")
+            .attr("name", "cptp_custom_name_text")
+            .attr("value", customNameText)
             .appendTo(this);
     });
 });
