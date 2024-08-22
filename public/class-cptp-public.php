@@ -10,6 +10,8 @@ class CPTP_Public {
         // WooCommerce hooks for custom text functionality
         add_filter('woocommerce_add_cart_item_data', array($this, 'add_custom_text_to_cart_item'), 10, 2);
         add_filter('woocommerce_get_item_data', array($this, 'display_custom_text_in_cart'), 10, 2);
+        add_action('woocommerce_checkout_create_order_line_item', array($this, 'save_custom_text_to_order_items'), 10, 4);
+        add_filter('woocommerce_order_item_display_meta_key', array($this, 'display_custom_text_in_order_meta'), 10, 3);
     }
 
     public function enqueue_public_scripts() {
@@ -71,5 +73,31 @@ class CPTP_Public {
             );
         }
         return $item_data;
+    }
+    public function save_custom_text_to_order_items($item, $cart_item_key, $values, $order) {
+        if (!empty($values['cptp_selected_name_font'])) {
+            $item->add_meta_data(__('Selected Name Font','cptp'), $values['cptp_selected_name_font']);
+        }
+        
+        if (!empty($values['cptp_custom_name_text'])) {
+            $item->add_meta_data(__('Custom Name Text','cptp'), sanitize_text_field($values['cptp_custom_name_text']));
+        }
+
+        if (!empty($values['cptp_custom_city_text'])) {
+            $item->add_meta_data(__('Custom City Text','cptp'), sanitize_text_field($values['cptp_custom_city_text']));
+        }
+    }
+
+    public function display_custom_text_in_order_meta($display_key, $meta, $item) {
+        if ($meta->key === __('Custom Name Text','cptp')) {
+            $display_key = 'Custom Name Text';
+        }
+        else if ($meta->key === __('Custom City Text','cptp')) {
+            $display_key = 'Custom City Text';
+        }
+        else if ($meta->key === __('Selected Name Font','cptp')) {
+            $display_key = 'Selected Name Font';
+        }
+        return $display_key;
     }
 }
