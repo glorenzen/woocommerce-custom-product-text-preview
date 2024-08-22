@@ -18,8 +18,8 @@ class CPTP_Public {
 
         $acf_fields = array(
             'font_size_group' => get_field('font_size_group'),
-            'font_family_group' => get_field('font_family_group'),
             'font_color_group' => get_field('font_color_group'),
+            'field_name_text_preview_image' => get_field('field_name_text_preview_image'),
         );
         $logo_font_mapping = array(
             'default' => 'Vast Shadow',
