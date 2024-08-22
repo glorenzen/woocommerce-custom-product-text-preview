@@ -40,7 +40,7 @@ function enqueue_fabric() {
 }
 
 function enqueue_utils() {
-    wp_register_script('cptp-canvas-utils', CPTP_PLUGIN_URL . 'utils/canvas-utils.js', array('jquery'), null, true);
+    wp_register_script('cptp-canvas-utils', CPTP_PLUGIN_URL . 'utils/canvas-utils.js', array('jquery'), date("h:i:s"), true);
     wp_enqueue_script('cptp-canvas-utils');
 }
 
