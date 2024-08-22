@@ -64,7 +64,6 @@ jQuery(document).ready(function ($) {
         method: 'GET',
         success: function(response) {
             settings = response;
-            console.log(settings);
         },
         error: function() {
             alert('An error occurred while fetching the settings.');
