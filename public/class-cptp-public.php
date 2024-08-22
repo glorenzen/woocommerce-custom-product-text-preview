@@ -21,10 +21,16 @@ class CPTP_Public {
             'font_family_group' => get_field('font_family_group'),
             'font_color_group' => get_field('font_color_group'),
         );
+        $logo_font_mapping = array(
+            'default' => 'Vast Shadow',
+            'Carpenters' => 'Monoton',
+            'Ancient Order of Divers' => 'Rye',
+        );
         wp_localize_script('cptp-public-js', 'cptp_values', array(
             'ajax_url' => admin_url('admin-ajax.php'),
             'post_id' => get_the_ID(),
             'acf_fields' => $acf_fields,
+            'logo_font_mapping' => $logo_font_mapping,
         ));
     }
 
