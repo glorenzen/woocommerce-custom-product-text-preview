@@ -33,6 +33,12 @@ jQuery(document).ready(function ($) {
         canvas.setViewportTransform([zoom, 0, 0, zoom, 0, 0]);
     }
 
+    function setLogoFontFamily() {
+        const selectedLogo = $('#pa_local-logo option:selected').text();
+        const fontFamily = cptp_values.logo_font_mapping[selectedLogo] || cptp_values.logo_font_mapping['default'];
+        return fontFamily;
+    }
+
     // Check variations on change
     $(".variations select").change(function () {
         toggleCustomTextField();
@@ -98,7 +104,7 @@ jQuery(document).ready(function ($) {
                             circleWidth: settings.circle_width,
                             fontSize: cptp_values.acf_fields.font_size_group.override_font_size ? cptp_values.acf_fields.font_size_group.font_size : settings.font_size,
                             fontColor: cptp_values.acf_fields.font_color_group.override_font_color ? cptp_values.acf_fields.font_color_group.font_color : settings.font_color,
-                            fontFamily: cptp_values.acf_fields.font_family_group.override_font_family ? cptp_values.acf_fields.font_family_group.font_family : settings.font_family || "Open Sans",
+                            fontFamily: setLogoFontFamily(),
                             circleColor: settings.circle_color
                         };
 
