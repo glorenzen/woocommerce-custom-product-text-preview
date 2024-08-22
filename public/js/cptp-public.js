@@ -40,7 +40,7 @@ jQuery(document).ready(function ($) {
     }
 
     function setNameFontFamily() {
-        return $('#name-font option:selected').text();
+        return $('#cptp-name-font option:selected').text();
     }
 
     // Check variations on change
