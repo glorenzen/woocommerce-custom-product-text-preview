@@ -12,13 +12,14 @@
  * @param {string} [settings.fontColor='#000000'] - The color of the text.
  * @param {string} [settings.fontFamily='Open Sans'] - The font family of the text.
  * @param {string} [settings.circleColor='#FFFFFF'] - The color of the circle overlay.
- * @param {Object} [options={ showCircle: true }] - The options for rendering.
+ * @param {Object} [options={ showCircle: true, renderOnCircle: true }] - The options for rendering.
  * @param {boolean} [options.showCircle=true] - Whether to show the circle overlay or not.
+ * @param {boolean} [options.renderOnCircle=true] - Whether to render the text on the circle path or not.
  * @param {number} initialCanvasWidth - The initial width of the canvas.
  * @param {number} initialCanvasHeight - The initial height of the canvas.
  * @returns {void}
  */
-function renderCanvas(canvas, imgElement, settings, options = { showCircle: true }, initialCanvasWidth, initialCanvasHeight) {
+function renderCanvas(canvas, imgElement, settings, options = { showCircle: true, renderOnCircle: true }, initialCanvasWidth, initialCanvasHeight) {
     // Calculate the scaling factors for the canvas based on the initial image dimensions
     const scaleX = initialCanvasWidth ? initialCanvasWidth / imgElement.width : canvas.width / imgElement.width;
     const scaleY = initialCanvasHeight ? initialCanvasHeight / imgElement.height : canvas.height / imgElement.height;
@@ -44,51 +45,69 @@ function renderCanvas(canvas, imgElement, settings, options = { showCircle: true
     const scaledX = x * scaleX;
     const scaledY = y * scaleY;
 
-    // Calculate the path data for the circle overlay
-    const radius = circleWidth / 2;
-    const pathData = `M ${scaledX - radius}, ${scaledY} a ${radius},${radius} 0 1,0 ${circleWidth},0`;
+    if (options.renderOnCircle) {
+        // Calculate the path data for the circle overlay
+        const radius = circleWidth / 2;
+        const pathData = `M ${scaledX - radius}, ${scaledY} a ${radius},${radius} 0 1,0 ${circleWidth},0`;
 
-    // Create a half circle path object with the specified properties
-    const halfCirclePath = new fabric.Path(pathData, {
-        fill: '',
-        stroke: circleColor,
-        selectable: false,
-        originX: 'center',
-        left: scaledX,
-        top: scaledY,
-        opacity: options.showCircle ? 1 : 0,
-    });
+        // Create a half circle path object with the specified properties
+        const halfCirclePath = new fabric.Path(pathData, {
+            fill: '',
+            stroke: circleColor,
+            selectable: false,
+            originX: 'center',
+            left: scaledX,
+            top: scaledY,
+            opacity: options.showCircle ? 1 : 0,
+        });
 
-    // Calculate the path segments info for the half circle path
-    const pathInfo = fabric.util.getPathSegmentsInfo(halfCirclePath.path);
-    halfCirclePath.segmentsInfo = pathInfo;
+        // Calculate the path segments info for the half circle path
+        const pathInfo = fabric.util.getPathSegmentsInfo(halfCirclePath.path);
+        halfCirclePath.segmentsInfo = pathInfo;
 
-    // Create a text object with the specified properties
-    const textInstance = new fabric.Text(text, {
-        fontSize: fontSize,
-        fill: fontColor,
-        textAlign: 'center',
-        originX: 'center',
-        path: halfCirclePath,
-        pathSide: 'left',
-        pathAlign: 'center',
-        pathOffset: radius,
-    });
+        // Create a text object with the specified properties
+        const textInstance = new fabric.Text(text, {
+            fontSize: fontSize,
+            fill: fontColor,
+            textAlign: 'center',
+            originX: 'center',
+            path: halfCirclePath,
+            pathSide: 'left',
+            pathAlign: 'center',
+            pathOffset: radius,
+        });
 
-    // Set the position of the text object
-    textInstance.set({
-        left: scaledX,
-        top: scaledY,
-    });
+        // Set the position of the text object
+        textInstance.set({
+            left: scaledX,
+            top: scaledY,
+        });
 
-    // Update the coordinates of the text object
-    textInstance.setCoords();
+        // Update the coordinates of the text object
+        textInstance.setCoords();
 
-    // Add the half circle path and text object to the canvas
-    canvas.add(halfCirclePath);
+        // Add the half circle path and text object to the canvas
+        canvas.add(halfCirclePath);
 
-    // Load the font and then add the text object to the canvas
-    loadAndUse(fontFamily, canvas, textInstance);
+        // Load the font and then add the text object to the canvas
+        loadAndUse(fontFamily, canvas, textInstance);
+    } else {
+        // Create a text object with the specified properties
+        const textInstance = new fabric.Text(text, {
+            fontSize: fontSize,
+            fill: fontColor,
+            textAlign: 'center',
+            originX: 'center',
+            left: scaledX,
+            top: scaledY,
+        });
+
+        // Update the coordinates of the text object
+        textInstance.setCoords();
+
+        // Load the font and then add the text object to the canvas
+        loadAndUse(fontFamily, canvas, textInstance);
+    }
 }
 
 function loadAndUse(font, canvas, textInstance) {
