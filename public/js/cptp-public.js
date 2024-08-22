@@ -176,6 +176,7 @@ jQuery(document).ready(function ($) {
     $("form.cart").on("submit", function () {
         let customCityText = $(".cptp-product-custom-text #cptp-custom-city-text").val();
         let customNameText = $(".cptp-product-custom-text #cptp-custom-name-text").val();
+        let selectedNameFont = $("#cptp-name-font option:selected").text();
 
         $("<input />").attr("type", "hidden")
             .attr("name", "cptp_custom_city_text")
@@ -185,6 +186,11 @@ jQuery(document).ready(function ($) {
         $("<input />").attr("type", "hidden")
             .attr("name", "cptp_custom_name_text")
             .attr("value", customNameText)
+            .appendTo(this);
+
+        $("<input />").attr("type", "hidden")
+            .attr("name", "cptp_selected_name_font")
+            .attr("value", selectedNameFont)
             .appendTo(this);
     });
 });

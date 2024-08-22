@@ -45,6 +45,9 @@ class CPTP_Public {
         if (isset($_POST['cptp_custom_city_text'])) {
             $cart_item_data['cptp_custom_city_text'] = sanitize_text_field($_POST['cptp_custom_city_text']);
         }
+        if (isset($_POST['cptp_selected_name_font'])) {
+            $cart_item_data['cptp_selected_name_font'] = sanitize_text_field($_POST['cptp_selected_name_font']);
+        }
         return $cart_item_data;
     }
 
@@ -59,6 +62,12 @@ class CPTP_Public {
             $item_data[] = array(
                 'key' => __('Custom Logo Text', 'cptp'),
                 'value' => wc_clean($cart_item['cptp_custom_city_text']),
+            );
+        }
+        if (isset($cart_item['cptp_selected_name_font'])) {
+            $item_data[] = array(
+                'key' => __('Name Font', 'cptp'),
+                'value' => wc_clean($cart_item['cptp_selected_name_font']),
             );
         }
         return $item_data;
