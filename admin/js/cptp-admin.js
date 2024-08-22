@@ -18,7 +18,7 @@ jQuery(document).ready(function($) {
             circleColor: $('input[name="cptp_circle_color"]').val()
         };
 
-        renderCanvas(canvas, imgElement, settings, { showCircle: true });
+        renderCanvas(canvas, imgElement, settings, { showCircle: true, renderOnCircle: true });
     }
 
     imgElement.onload = () => {
