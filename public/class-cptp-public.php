@@ -17,9 +17,9 @@ class CPTP_Public {
         wp_enqueue_script('cptp-public-js', plugin_dir_url(__FILE__) . 'js/cptp-public.js', array('jquery'), date("h:i:s"), true);
 
         $acf_fields = array(
-            'font_size_group' => get_field('font_size_group', $product_id),
-            'font_family_group' => get_field('font_family_group', $product_id),
-            'font_color_group' => get_field('font_color_group', $product_id),
+            'font_size_group' => get_field('font_size_group'),
+            'font_family_group' => get_field('font_family_group'),
+            'font_color_group' => get_field('font_color_group'),
         );
         wp_localize_script('cptp-public-js', 'cptp_values', array(
             'ajax_url' => admin_url('admin-ajax.php'),
