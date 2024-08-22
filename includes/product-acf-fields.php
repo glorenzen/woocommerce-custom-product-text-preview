@@ -73,44 +73,6 @@ acf_add_local_field_group(array(
             ),
         ),
         array(
-            'key' => 'field_font_family_group',
-            'label' => 'Font Family',
-            'name' => 'font_family_group',
-            'type' => 'group',
-            'conditional_logic' => array(
-                array(
-                    array(
-                        'field' => 'field_has_custom_text',
-                        'operator' => '==',
-                        'value' => '1',
-                    ),
-                ),
-            ),
-            'sub_fields' => array(
-                array(
-                    'key' => 'field_override_font_family',
-                    'label' => 'Override Font Family',
-                    'name' => 'override_font_family',
-                    'type' => 'true_false',
-                    'ui' => 1,
-                ),
-                array(
-                    'key' => 'field_font_family',
-                    'label' => 'Font Family',
-                    'name' => 'font_family',
-                    'conditional_logic' => array(
-                        array(
-                            array(
-                                'field' => 'field_override_font_family',
-                                'operator' => '==',
-                                'value' => '1',
-                            ),
-                        ),
-                    ),
-                ),
-            ),
-        ),
-        array(
             'key' => 'field_font_color_group',
             'label' => 'Font Color',
             'name' => 'font_color_group',
