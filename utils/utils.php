@@ -1,7 +1,7 @@
 <?php
 function render_font_family_dropdown($name, $selected_font) {
     $fonts = array(
-        'Open Sans', 'Courier New', 'Georgia', 'Times New Roman', 'Verdana', 'Roboto'
+        'Open Sans', 'Graduate', 'Monoton', 'Rye', 'UnifrakturMaguntia', 'Vast Shadow'
     );
     echo '<select name="' . esc_attr($name) . '">';
     foreach ($fonts as $font) {
