@@ -19,10 +19,10 @@ if (get_field('has_custom_text')) {
                 <?php endforeach; ?>
             </select>
         </div>
-        <div class="cptp-input-wrapper">
+        <div class="cptp-input-wrapper cptp-button-wrapper">
             <button id="cptp-preview-name-text-button" class="cptp-button">Preview</button>
         </div>
-        <div class="cptp-input-wrapper">
+        <div class="cptp-input-wrapper cptp-button-wrapper">
             <label for="cptp-custom_text" class="cptp-form-label">City Text</label>
             <input type="text" id="cptp-custom-city-text" name="cptp-custom_text" class="cptp-form-control" value="" maxLength="<?php echo esc_attr($custom_text_max_length); ?>" />
         </div>  
