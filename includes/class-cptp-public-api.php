@@ -40,7 +40,8 @@ class CPTP_Public_API {
             'circle_width' => get_option('cptp_circle_width'),
             'preview_image' => get_option('cptp_preview_image'),
             'custom_text' => get_option('cptp_custom_text'),
-            'font_size' => get_option('cptp_font_size'),
+            'logo_font_size' => get_option('cptp_logo_font_size'),
+            'name_font_size' => get_option('cptp_name_font_size'),
             'font_family' => get_option('cptp_font_family'),
             'font_color' => get_option('cptp_font_color'),
             'circle_color' => get_option('cptp_circle_color')

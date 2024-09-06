@@ -105,7 +105,7 @@ jQuery(document).ready(function ($) {
                             xCoordinate: settings.x_coordinate,
                             yCoordinate: settings.y_coordinate,
                             circleWidth: settings.circle_width,
-                            fontSize: cptp_values.acf_fields.font_size_group.override_font_size ? cptp_values.acf_fields.font_size_group.font_size : settings.font_size,
+                            fontSize: cptp_values.acf_fields.font_size_group.override_font_size ? cptp_values.acf_fields.font_size_group.font_size : settings.logo_font_size,
                             fontColor: cptp_values.acf_fields.font_color_group.override_font_color ? cptp_values.acf_fields.font_color_group.font_color : settings.font_color,
                             fontFamily: setLogoFontFamily(),
                             circleColor: settings.circle_color
@@ -150,7 +150,7 @@ jQuery(document).ready(function ($) {
                 customText: $("#cptp-custom-name-text").val(),
                 xCoordinate: settings.x_coordinate,
                 yCoordinate: settings.y_coordinate,
-                fontSize: cptp_values.acf_fields.font_size_group.override_font_size ? cptp_values.acf_fields.font_size_group.font_size : settings.font_size,
+                fontSize: cptp_values.acf_fields.font_size_group.override_font_size ? cptp_values.acf_fields.font_size_group.font_size : settings.name_font_size,
                 fontColor: cptp_values.acf_fields.font_color_group.override_font_color ? cptp_values.acf_fields.font_color_group.font_color : settings.font_color,
                 fontFamily: setNameFontFamily(), 
             };

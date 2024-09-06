@@ -32,7 +32,8 @@ class CPTP_Admin {
         register_setting('cptp_settings_group', 'cptp_preview_image');
         register_setting('cptp_settings_group', 'cptp_custom_text');
         register_setting('cptp_settings_group', 'cptp_custom_text_max_length');
-        register_setting('cptp_settings_group', 'cptp_font_size');
+        register_setting('cptp_settings_group', 'cptp_logo_font_size');
+        register_setting('cptp_settings_group', 'cptp_name_font_size');
         register_setting('cptp_settings_group', 'cptp_font_family');
         register_setting('cptp_settings_group', 'cptp_font_color');
         register_setting('cptp_settings_group', 'cptp_circle_color');
@@ -93,9 +94,17 @@ class CPTP_Admin {
         );
 
         add_settings_field(
-            'cptp_font_size',
-            'Font Size',
-            array($this, 'font_size_callback'),
+            'cptp_logo_font_size',
+            'Logo Text Font Size',
+            array($this, 'logo_font_size_callback'),
+            'cptp-settings',
+            'cptp_settings_section'
+        );
+
+        add_settings_field(
+            'cptp_name_font_size',
+            'Name Font Size',
+            array($this, 'name_font_size_callback'),
             'cptp-settings',
             'cptp_settings_section'
         );
@@ -161,9 +170,14 @@ class CPTP_Admin {
         echo '<input type="number" id="cptp_custom_text_max_length" name="cptp_custom_text_max_length" value="' . esc_attr($value) . '" />';
     }
 
-    public function font_size_callback() {
-        $value = get_option('cptp_font_size', '');
-        echo '<input type="number" id="cptp_font_size" name="cptp_font_size" value="' . esc_attr($value) . '" />';
+    public function logo_font_size_callback() {
+        $value = get_option('cptp_logo_font_size', '');
+        echo '<input type="number" id="cptp_logo_font_size" name="cptp_logo_font_size" value="' . esc_attr($value) . '" />';
+    }
+
+    public function name_font_size_callback() {
+        $value = get_option('cptp_name_font_size', '');
+        echo '<input type="number" id="cptp_name_font_size" name="cptp_name_font_size" value="' . esc_attr($value) . '" />';
     }
 
     public function font_family_callback() {
