@@ -7,6 +7,9 @@ class CPTP_Public {
         // Render custom text input on single product page
         add_action('woocommerce_before_add_to_cart_button', array($this, 'render_single_product_display'), 25);
 
+        // Render preview modal in footer
+        add_action('wp_footer', array($this, 'render_preview_modal'));
+
         // WooCommerce hooks for custom text functionality
         add_filter('woocommerce_add_cart_item_data', array($this, 'add_custom_text_to_cart_item'), 10, 2);
         add_filter('woocommerce_get_item_data', array($this, 'display_custom_text_in_cart'), 10, 2);
@@ -38,6 +41,10 @@ class CPTP_Public {
 
     public function render_single_product_display() {
         include plugin_dir_path(__FILE__) . 'partials/cptp-single-product-display.php';
+    }
+
+    public function render_preview_modal() {
+        include plugin_dir_path(__FILE__) . 'partials/cptp-preview-modal.php';
     }
 
     public function add_custom_text_to_cart_item($cart_item_data, $product_id) {
