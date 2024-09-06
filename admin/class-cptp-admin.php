@@ -37,14 +37,17 @@ class CPTP_Admin {
         register_setting('cptp_settings_group', 'cptp_font_family');
         register_setting('cptp_settings_group', 'cptp_font_color');
         register_setting('cptp_settings_group', 'cptp_circle_color');
-    
+        register_setting('cptp_settings_group', 'cptp_name_text_label');
+        register_setting('cptp_settings_group', 'cptp_name_font_label');
+        register_setting('cptp_settings_group', 'cptp_logo_text_label');
+
         add_settings_section(
             'cptp_settings_section',
             'Global Customization Settings',
             null,
             'cptp-settings'
         );
-    
+
         add_settings_field(
             'cptp_x_coordinate',
             'X-Coordinate',
@@ -52,7 +55,7 @@ class CPTP_Admin {
             'cptp-settings',
             'cptp_settings_section'
         );
-    
+
         add_settings_field(
             'cptp_y_coordinate',
             'Y-Coordinate',
@@ -68,7 +71,7 @@ class CPTP_Admin {
             'cptp-settings',
             'cptp_settings_section'
         );
-    
+
         add_settings_field(
             'cptp_preview_image',
             'Preview Image',
@@ -76,7 +79,7 @@ class CPTP_Admin {
             'cptp-settings',
             'cptp_settings_section'
         );
-    
+
         add_settings_field(
             'cptp_custom_text',
             'Custom Text',
@@ -129,6 +132,30 @@ class CPTP_Admin {
             'cptp_circle_color',
             'Circle Color',
             array($this, 'circle_color_callback'),
+            'cptp-settings',
+            'cptp_settings_section'
+        );
+
+        add_settings_field(
+            'cptp_name_text_label',
+            'Name Text Label',
+            array($this, 'name_text_label_callback'),
+            'cptp-settings',
+            'cptp_settings_section'
+        );
+
+        add_settings_field(
+            'cptp_name_font_label',
+            'Name Font Label',
+            array($this, 'name_font_label_callback'),
+            'cptp-settings',
+            'cptp_settings_section'
+        );
+
+        add_settings_field(
+            'cptp_logo_text_label',
+            'Logo Text Label',
+            array($this, 'logo_text_label_callback'),
             'cptp-settings',
             'cptp_settings_section'
         );
@@ -194,6 +221,21 @@ class CPTP_Admin {
         $value = get_option('cptp_circle_color', '');
         echo '<input type="color" id="cptp_circle_color" name="cptp_circle_color" value="' . esc_attr($value) . '" />';
         echo '<p class="description">This color is for preview purposes only and will not be shown on the front end.</p>';
+    }
+
+    public function name_text_label_callback() {
+        $value = get_option('cptp_name_text_label', 'Name Text');
+        echo '<input type="text" id="cptp_name_text_label" name="cptp_name_text_label" value="' . esc_attr($value) . '" />';
+    }
+    
+    public function name_font_label_callback() {
+        $value = get_option('cptp_name_font_label', 'Name Font');
+        echo '<input type="text" id="cptp_name_font_label" name="cptp_name_font_label" value="' . esc_attr($value) . '" />';
+    }
+    
+    public function logo_text_label_callback() {
+        $value = get_option('cptp_logo_text_label', 'Logo Text');
+        echo '<input type="text" id="cptp_logo_text_label" name="cptp_logo_text_label" value="' . esc_attr($value) . '" />';
     }
 
     public function enqueue_admin_scripts() {
