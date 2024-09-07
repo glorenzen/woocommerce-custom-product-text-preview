@@ -39,8 +39,8 @@ jQuery(document).ready(function ($) {
         return fontFamily;
     }
 
-    function setNameFontFamily() {
-        return $('#cptp-name-font option:selected').text();
+    function setSelectedFontFamily(variationId, index) {
+        return $(`#cptp-font-select-${variationId}-${index} option:selected`).text();
     }
 
     // Check variations on change
@@ -70,68 +70,18 @@ jQuery(document).ready(function ($) {
         }
     });
 
-    $("#cptp-preview-city-text-button").click(function (event) {
+    // Handle preview button click
+    $(document).on('click', '.cptp-preview-text-button', function (event) {
         event.preventDefault();
+
+        const button = $(this);
         const variationId = selectedVariationId;
+        const index = button.attr('id').split('-').pop();
 
-        $.ajax({
-            url: cptp_values.ajax_url,
-            method: "POST",
-            data: {
-                action: "get_featured_image",
-                variation_id: variationId,
-            },
-            success: function (response) {
-                if (response.success) {
-                    canvas.clear();
+        const imageUrl = variationPreviewOptions[variationId][index].image;
 
-                    const featuredImage = response.data;
-                    const imgElement = new Image();
-                    imgElement.src = featuredImage;
-
-                    imgElement.onload = () => {
-                        const image = new fabric.Image(imgElement, {
-                            left: 0,
-                            top: 0,
-                            selectable: false,
-                            scaleX: initialCanvasWidth / imgElement.width,
-                            scaleY: initialCanvasHeight / imgElement.height,
-                        });
-
-                        canvas.add(image);
-                        
-                        const canvasSettings = {
-                            customText: $("#cptp-custom-city-text").val(),
-                            xCoordinate: settings.x_coordinate,
-                            yCoordinate: settings.y_coordinate,
-                            circleWidth: settings.circle_width,
-                            fontSize: cptp_values.acf_fields.font_size_group.override_font_size ? cptp_values.acf_fields.font_size_group.font_size : settings.logo_font_size,
-                            fontColor: cptp_values.acf_fields.font_color_group.override_font_color ? cptp_values.acf_fields.font_color_group.font_color : settings.font_color,
-                            fontFamily: setLogoFontFamily(),
-                            circleColor: settings.circle_color
-                        };
-
-                        renderCanvas(canvas, imgElement, canvasSettings, { showCircle: false, renderOnCircle: true }, initialCanvasWidth, initialCanvasHeight);
-
-                        modal.show();
-                        resizeCanvas();
-                    };
-                } else {
-                    alert("Error: " + response.data);
-                }
-            },
-            error: function () {
-                alert("An error occurred while fetching the featured image.");
-            },
-        });
-    });
-
-    $("#cptp-preview-name-text-button").click(function (event) {
-        event.preventDefault();
-        
-        const acfImage = cptp_values.acf_fields.field_name_text_preview_image.url;
         const imgElement = new Image();
-        imgElement.src = acfImage;
+        imgElement.src = imageUrl;
 
         imgElement.onload = () => {
             canvas.clear();
@@ -145,17 +95,25 @@ jQuery(document).ready(function ($) {
             });
 
             canvas.add(image);
-            
-            const canvasSettings = {
-                customText: $("#cptp-custom-name-text").val(),
+
+            const renderOnCircle = variationPreviewOptions[variationId][index].render_on_circle === 'yes' ? true : false;
+
+            const fontSelect = $(`#cptp-font-select-${variationId}-${index}`);
+
+            let canvasSettings = {
+                customText: $(`#cptp-custom-text-${variationId}-${index}`).val(),
                 xCoordinate: settings.x_coordinate,
                 yCoordinate: settings.y_coordinate,
                 fontSize: cptp_values.acf_fields.font_size_group.override_font_size ? cptp_values.acf_fields.font_size_group.font_size : settings.name_font_size,
                 fontColor: cptp_values.acf_fields.font_color_group.override_font_color ? cptp_values.acf_fields.font_color_group.font_color : settings.font_color,
-                fontFamily: setNameFontFamily(), 
+                fontFamily: fontSelect.length > 0 ? setSelectedFontFamily(variationId, index) : setLogoFontFamily(),
             };
 
-            renderCanvas(canvas, imgElement, canvasSettings, { showCircle: false, renderOnCircle: false }, initialCanvasWidth, initialCanvasHeight);
+            if (renderOnCircle) {
+                canvasSettings.circleWidth = settings.circle_width;
+            }
+
+            renderCanvas(canvas, imgElement, canvasSettings, { showCircle: false, renderOnCircle: renderOnCircle }, initialCanvasWidth, initialCanvasHeight);
 
             modal.show();
             resizeCanvas();
@@ -170,6 +128,59 @@ jQuery(document).ready(function ($) {
         if (event.target.id === "cptp-preview-modal") {
             modal.hide();
         }
+    });
+
+    function updatePreviewOptions(variationId) {
+        var container = $('#cptp-preview-options-container');
+        container.empty();
+
+        if (variationPreviewOptions.hasOwnProperty(variationId)) {
+            var previewOptions = variationPreviewOptions[variationId];
+            previewOptions.forEach(function(option, index) {
+                var inputType = option.input_type || 'text';
+                var label = option.label || '';
+                var userSelectedFont = option.user_selected_font || 'no';
+
+                var newOption = `
+                    <div class="cptp-input-wrapper">
+                        <label for="cptp-custom-text-${variationId}-${index}" class="cptp-form-label">${label}</label>
+                        ${inputType === 'text' ? `<input type="text" id="cptp-custom-text-${variationId}-${index}" name="cptp-custom_text[${variationId}][${index}]" class="cptp-form-control" value="" maxLength="${customTextMaxLength}" />` : ''}
+                        ${inputType === 'dropdown' ? `<select id="cptp-custom-text-${variationId}-${index}" name="cptp-custom_text[${variationId}][${index}]" class="cptp-form-control">${fontOptions.map(font => `<option value="${font}">${font}</option>`).join('')}</select>` : ''}
+                    </div>
+                `;
+
+                if (userSelectedFont === 'yes') {
+                    newOption += `
+                        <div class="cptp-input-wrapper">
+                            <label for="cptp-font-select-${variationId}-${index}" class="cptp-form-label">${nameFontLabel}</label>
+                            <select id="cptp-font-select-${variationId}-${index}" name="cptp-font-select[${variationId}][${index}]" class="cptp-form-control">
+                                ${fontOptions.map(font => `<option value="${font}">${font}</option>`).join('')}
+                            </select>
+                        </div>
+                    `;
+                }
+
+                newOption += `
+                    <div class="cptp-input-wrapper cptp-button-wrapper">
+                        <button id="cptp-preview-text-button-${variationId}-${index}" class="cptp-button cptp-preview-text-button">Preview</button>
+                    </div>
+                `;
+
+                container.append(newOption);
+            });
+        }
+    }
+
+    // Update preview options when a variation is selected
+    $('form.variations_form').on('show_variation', function(event, variation) {
+        updatePreviewOptions(variation.variation_id);
+        $('.cptp-product-custom-text').show();
+    });
+
+    // Hide preview options when no variation is selected
+    $('form.variations_form').on('hide_variation', function() {
+        $('#cptp-preview-options-container').empty();
+        $('.cptp-product-custom-text').hide();
     });
 
     // Capture custom text value on add to cart
