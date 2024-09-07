@@ -242,5 +242,6 @@ class CPTP_Admin {
         wp_enqueue_media();
         wp_enqueue_style('cptp-admin', CPTP_PLUGIN_URL . 'admin/css/cptp-admin.css', null, date("h:i:s"));
         wp_enqueue_script('cptp-admin', CPTP_PLUGIN_URL . 'admin/js/cptp-admin.js', array('jquery'), date("h:i:s"), true);
+        wp_enqueue_script('cptp-product-admin', CPTP_PLUGIN_URL . 'admin/js/cptp-product-admin.js', array('jquery'), date("h:i:s"), true);
     }
 }
