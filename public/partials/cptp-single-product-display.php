@@ -1,40 +1,29 @@
 <?php
-// Check if the product has custom text enabled
-if (get_field('has_custom_text')) {
-    // Retrieve the max length for the custom text input from the admin settings
-    $custom_text_max_length = get_option('cptp_custom_text_max_length', 20); // Default to 20 if not set
-    $name_text_max_length = get_option('cptp_name_text_max_length', 20); // Default to 20 if not set
-    $font_options = array('Graduate', 'Monoton', 'Vast Shadow', 'Rye', 'UnifrakturMaguntia');
+// Set font options
+$font_options = array('Graduate', 'Monoton', 'Vast Shadow', 'Rye', 'UnifrakturMaguntia');
 
-    // Retrieve label settings
-    $name_text_label = get_option('cptp_name_text_label', 'Name Text');
-    $name_font_label = get_option('cptp_name_font_label', 'Name Font');
-    $city_text_label = get_option('cptp_logo_text_label', 'Logo Text');
-    ?>
-    <div class="cptp-product-custom-text" style="display: none;">
-        <div class="cptp-input-wrapper">
-            <label for="cptp-name_text" class="cptp-form-label"><?php echo esc_html($name_text_label); ?></label>
-            <input type="text" id="cptp-custom-name-text" name="cptp-name_text" class="cptp-form-control" value="" maxLength="<?php echo esc_attr($name_text_max_length); ?>" />
-        </div>
-        <div class="cptp-input-wrapper">
-            <label for="cptp-name-font" class="cptp-form-label"><?php echo esc_html($name_font_label); ?></label>
-            <select id="cptp-name-font" name="cptp-name-font" class="cptp-form-control">
-                <?php foreach ($font_options as $font) : ?>
-                    <option value="<?php echo esc_attr($font); ?>"><?php echo esc_html($font); ?></option>
-                <?php endforeach; ?>
-            </select>
-        </div>
-        <div class="cptp-input-wrapper cptp-button-wrapper">
-            <button id="cptp-preview-name-text-button" class="cptp-button">Preview</button>
-        </div>
-        <div class="cptp-input-wrapper">
-            <label for="cptp-custom_text" class="cptp-form-label"><?php echo esc_html($city_text_label); ?></label>
-            <input type="text" id="cptp-custom-city-text" name="cptp-custom_text" class="cptp-form-control" value="" maxLength="<?php echo esc_attr($custom_text_max_length); ?>" />
-        </div>  
-        <div class="cptp-input-wrapper cptp-button-wrapper">
-            <button id="cptp-preview-city-text-button" class="cptp-button">Preview</button>
-        </div>
-    </div>
-    <?php
+// Retrieve the custom text preview options for each variation
+global $product;
+$variations = $product->get_available_variations();
+$variation_preview_options = array();
+
+foreach ($variations as $variation) {
+    $variation_id = $variation['variation_id'];
+    $has_custom_text_preview = get_post_meta($variation_id, '_has_custom_text_preview', true);
+    if ($has_custom_text_preview === 'yes') {
+        $preview_options = get_post_meta($variation_id, '_custom_text_preview_options', true);
+        if (!empty($preview_options)) {
+            $variation_preview_options[$variation_id] = $preview_options;
+        }
+    }
 }
 ?>
+<div class="cptp-product-custom-text" style="display: none;">
+    <div id="cptp-preview-options-container"></div>
+</div>
+<script type="text/javascript">
+    var variationPreviewOptions = <?php echo json_encode($variation_preview_options); ?>;
+    var fontOptions = <?php echo json_encode($font_options); ?>;
+    var customTextMaxLength = <?php echo json_encode($custom_text_max_length); ?>;
+    var nameFontLabel = <?php echo json_encode($name_font_label); ?>;
+</script>
