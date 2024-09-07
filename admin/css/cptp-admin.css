@@ -1,1 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Graduate&family=Monoton&family=Rye&family=UnifrakturMaguntia&family=Vast+Shadow&display=swap');
+
+[class*='_custom_text_preview_dropdown_values'] {
+    display: none;
+}
