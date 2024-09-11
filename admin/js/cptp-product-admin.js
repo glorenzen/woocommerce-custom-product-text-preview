@@ -1,7 +1,6 @@
 jQuery(document).ready(function($) {
     // Use event delegation to handle click events on dynamically added elements
     $(document).on('click', '.cptp-add-preview-button', function() {
-        console.log('clicked');
         var wrapper = $(this).prev('.cptp-preview-options-wrapper');
         var index = wrapper.find('.cptp-preview-option').length;
         var loop = $(this).closest('.woocommerce_variation').index();
