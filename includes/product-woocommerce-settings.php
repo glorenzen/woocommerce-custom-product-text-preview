@@ -73,6 +73,11 @@ function cptp_add_custom_text_preview_options_variation($loop, $variation_data, 
                 <button type="button" class="button cptp-upload-image-button" data-target="#_custom_text_preview_image_<?php echo $loop; ?>_<?php echo $index; ?>"><?php _e('Select Image', 'woocommerce'); ?></button>
                 <span class="cptp-image-preview"><?php echo isset($option['image']) ? '<img src="' . esc_url($option['image']) . '" style="max-width:100px;" />' : ''; ?></span>
             </p>
+            <?php
+            if ($index > 0) {
+                echo '<button type="button" class="button cptp-delete-preview-button">' . __('Delete Preview', 'woocommerce') . '</button>';
+            }
+            ?>
             <hr>
             <?php
             echo '</div>';
