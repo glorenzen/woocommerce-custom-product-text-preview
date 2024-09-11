@@ -90,6 +90,7 @@ function cptp_save_custom_text_preview_options_variation($variation_id, $i) {
             $preview_options[$index] = array(
                 'input_type' => sanitize_text_field($input_type),
                 'label' => sanitize_text_field($_POST['_custom_text_preview_label'][$i][$index]),
+                'dropdown_values' => array_map('sanitize_text_field', explode(',', $_POST['_custom_text_preview_dropdown_values'][$i][$index])),
                 'render_on_circle' => isset($_POST['_custom_text_preview_render_on_circle'][$i][$index]) ? 'yes' : 'no',
                 'user_selected_font' => isset($_POST['_custom_text_preview_user_selected_font'][$i][$index]) ? 'yes' : 'no',
                 'image' => sanitize_text_field($_POST['_custom_text_preview_image'][$i][$index])

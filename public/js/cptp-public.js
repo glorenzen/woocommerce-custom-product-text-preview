@@ -131,21 +131,22 @@ jQuery(document).ready(function ($) {
     });
 
     function updatePreviewOptions(variationId) {
-        var container = $('#cptp-preview-options-container');
+        let container = $('#cptp-preview-options-container');
         container.empty();
 
         if (variationPreviewOptions.hasOwnProperty(variationId)) {
-            var previewOptions = variationPreviewOptions[variationId];
+            let previewOptions = variationPreviewOptions[variationId];
             previewOptions.forEach(function(option, index) {
-                var inputType = option.input_type || 'text';
-                var label = option.label || '';
-                var userSelectedFont = option.user_selected_font || 'no';
+                const inputType = option.input_type || 'text';
+                const label = option.label || '';
+                const userSelectedFont = option.user_selected_font || 'no';
+                const dropdownOptions = option.dropdown_values || '';
 
                 var newOption = `
                     <div class="cptp-input-wrapper">
                         <label for="cptp-custom-text-${variationId}-${index}" class="cptp-form-label">${label}</label>
                         ${inputType === 'text' ? `<input type="text" id="cptp-custom-text-${variationId}-${index}" name="cptp-custom_text[${variationId}][${index}]" class="cptp-form-control" value="" maxLength="${customTextMaxLength}" />` : ''}
-                        ${inputType === 'dropdown' ? `<select id="cptp-custom-text-${variationId}-${index}" name="cptp-custom_text[${variationId}][${index}]" class="cptp-form-control">${fontOptions.map(font => `<option value="${font}">${font}</option>`).join('')}</select>` : ''}
+                        ${inputType === 'dropdown' ? `<select id="cptp-custom-text-${variationId}-${index}" name="cptp-custom_text[${variationId}][${index}]" class="cptp-form-control">${dropdownOptions.map(dropdownOption => `<option value="${dropdownOption}">${dropdownOption}</option>`).join('')}</select>` : ''}
                     </div>
                 `;
 
