@@ -51,6 +51,11 @@ function cptp_add_custom_text_preview_options_variation($loop, $variation_data, 
                 'value' => isset($option['dropdown_values']) ? $option['dropdown_values'] : '',
                 'class' => 'cptp-dropdown-values',
             ));
+            woocommerce_wp_text_input(array(
+                'id' => '_custom_text_preview_font_size[' . $loop . '][' . $index . ']',
+                'label' => __('Font Size', 'woocommerce'),
+                'value' => isset($option['font_size']) ? $option['font_size'] : ''
+            ));
             woocommerce_wp_checkbox(array(
                 'id' => '_custom_text_preview_render_on_circle[' . $loop . '][' . $index . ']',
                 'label' => __('Render on Circle', 'woocommerce'),
@@ -91,6 +96,7 @@ function cptp_save_custom_text_preview_options_variation($variation_id, $i) {
                 'input_type' => sanitize_text_field($input_type),
                 'label' => sanitize_text_field($_POST['_custom_text_preview_label'][$i][$index]),
                 'dropdown_values' => array_map('sanitize_text_field', explode(',', $_POST['_custom_text_preview_dropdown_values'][$i][$index])),
+                'font_size' => sanitize_text_field($_POST['_custom_text_preview_font_size'][$i][$index]),
                 'render_on_circle' => isset($_POST['_custom_text_preview_render_on_circle'][$i][$index]) ? 'yes' : 'no',
                 'user_selected_font' => isset($_POST['_custom_text_preview_user_selected_font'][$i][$index]) ? 'yes' : 'no',
                 'image' => sanitize_text_field($_POST['_custom_text_preview_image'][$i][$index])

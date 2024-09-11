@@ -24,6 +24,10 @@ jQuery(document).ready(function($) {
                     <label for="_custom_text_preview_dropdown_values[${loop}][${index}]">Dropdown Values (comma separated)</label>
                     <input type="text" id="_custom_text_preview_dropdown_values[${loop}][${index}]" name="_custom_text_preview_dropdown_values[${loop}][${index}]" value="">
                 </p>
+                <p class="form-field _custom_text_preview_font_size[${loop}][${index}]_field">
+                    <label for="_custom_text_preview_font_size[${loop}][${index}]">Font Size</label>
+                    <input type="number" id="_custom_text_preview_font_size[${loop}][${index}]" name="_custom_text_preview_font_size[${loop}][${index}]" value="">
+                </p>
                 <p class="form-field">
                     <label for="_custom_text_preview_render_on_circle[${loop}][${index}]">Render on Circle</label>
                     <input type="checkbox" id="_custom_text_preview_render_on_circle[${loop}][${index}]" name="_custom_text_preview_render_on_circle[${loop}][${index}]" value="yes">
