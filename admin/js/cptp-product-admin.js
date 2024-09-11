@@ -47,11 +47,17 @@ jQuery(document).ready(function($) {
         `;
 
         wrapper.append(newOption);
+
+        // Trigger change event on the form to enable the save button
+        $('form.variations_form').trigger('change');
     });
 
     // Use event delegation to handle click events on delete buttons
     $(document).on('click', '.cptp-delete-preview-button', function() {
         $(this).closest('.cptp-preview-option').remove();
+
+        // Trigger change event on the form to enable the save button
+        $('form.variations_form').trigger('change');
     });
 
     // Use event delegation to handle change events on input type select elements
@@ -91,6 +97,9 @@ jQuery(document).ready(function($) {
             // Update the hidden input field and the preview
             target.val(attachment.url);
             preview.html('<img src="' + attachment.url + '" style="max-width:100px;" />');
+
+            // Trigger change event on the form to enable the save button
+            $('form.variations_form').trigger('change');
         });
 
         // Finally, open the modal
