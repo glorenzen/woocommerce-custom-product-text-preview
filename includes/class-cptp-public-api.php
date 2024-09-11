@@ -42,6 +42,7 @@ class CPTP_Public_API {
             'custom_text' => get_option('cptp_custom_text'),
             'logo_font_size' => get_option('cptp_logo_font_size'),
             'name_font_size' => get_option('cptp_name_font_size'),
+            'name_font_label' => get_option('cptp_name_font_label'),
             'font_family' => get_option('cptp_font_family'),
             'font_color' => get_option('cptp_font_color'),
             'circle_color' => get_option('cptp_circle_color')
