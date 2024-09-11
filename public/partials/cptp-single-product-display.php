@@ -25,5 +25,4 @@ foreach ($variations as $variation) {
     var variationPreviewOptions = <?php echo json_encode($variation_preview_options); ?>;
     var fontOptions = <?php echo json_encode($font_options); ?>;
     var customTextMaxLength = <?php echo json_encode($custom_text_max_length); ?>;
-    var nameFontLabel = <?php echo json_encode($name_font_label); ?>;
 </script>
