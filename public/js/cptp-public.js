@@ -152,7 +152,7 @@ jQuery(document).ready(function ($) {
                 if (userSelectedFont === 'yes') {
                     newOption += `
                         <div class="cptp-input-wrapper">
-                            <label for="cptp-font-select-${variationId}-${index}" class="cptp-form-label">${nameFontLabel}</label>
+                            <label for="cptp-font-select-${variationId}-${index}" class="cptp-form-label">${settings.name_font_label}</label>
                             <select id="cptp-font-select-${variationId}-${index}" name="cptp-font-select[${variationId}][${index}]" class="cptp-form-control">
                                 ${fontOptions.map(font => `<option value="${font}">${font}</option>`).join('')}
                             </select>
