@@ -35,6 +35,12 @@ jQuery(document).ready(function($) {
                         <input type="number" id="_custom_text_preview_font_size[${loop}][${index}]" name="_custom_text_preview_font_size[${loop}][${index}]" value="">
                     </p>
                 </div>
+                <div class="form-field-wrapper">
+                    <p class="form-field _custom_text_preview_font_color[${loop}][${index}]_field">
+                        <label for="_custom_text_preview_font_color[${loop}][${index}]">Font Color</label>
+                        <input type="color" id="_custom_text_preview_font_color[${loop}][${index}]" name="_custom_text_preview_font_color[${loop}][${index}]" value="">
+                    </p>
+                </div>
                 <div class="form-row">
                     <p class="form-field">
                         <input type="checkbox" id="_custom_text_preview_render_on_circle[${loop}][${index}]" name="_custom_text_preview_render_on_circle[${loop}][${index}]" value="yes">

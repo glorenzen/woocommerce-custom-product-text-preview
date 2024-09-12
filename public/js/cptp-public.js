@@ -98,6 +98,7 @@ jQuery(document).ready(function ($) {
 
             const renderOnCircle = variationPreviewOptions[variationId][index].render_on_circle === 'yes' ? true : false;
             const fontSize = variationPreviewOptions[variationId][index].font_size;
+            const fontColor = variationPreviewOptions[variationId][index].font_color;
 
             const fontSelect = $(`#cptp-font-select-${variationId}-${index}`);
 
@@ -106,7 +107,7 @@ jQuery(document).ready(function ($) {
                 xCoordinate: settings.x_coordinate,
                 yCoordinate: settings.y_coordinate,
                 fontSize: fontSize,
-                fontColor: cptp_values.acf_fields.font_color_group.override_font_color ? cptp_values.acf_fields.font_color_group.font_color : settings.font_color,
+                fontColor: fontColor,
                 fontFamily: fontSelect.length > 0 ? setSelectedFontFamily(variationId, index) : setLogoFontFamily(),
             };
 

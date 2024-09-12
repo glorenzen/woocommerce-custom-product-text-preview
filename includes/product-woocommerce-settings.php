@@ -73,6 +73,16 @@ function cptp_add_custom_text_preview_options_variation($loop, $variation_data, 
                 ));
                 ?>
             </div>
+            <div class="form-field-wrapper">
+                <?php
+                woocommerce_wp_text_input(array(
+                    'id' => '_custom_text_preview_font_color[' . $loop . '][' . $index . ']',
+                    'label' => __('Font Color', 'woocommerce'),
+                    'type' => 'color',
+                    'value' => isset($option['font_color']) ? $option['font_color'] : '#000000'
+                ));
+                ?>
+            </div>
             <div class="form-row">
                 <?php
                 woocommerce_wp_checkbox(array(
@@ -135,6 +145,7 @@ function cptp_save_custom_text_preview_options_variation($variation_id, $i) {
                 'label' => sanitize_text_field($_POST['_custom_text_preview_label'][$i][$index]),
                 'dropdown_values' => $dropdown_values,
                 'font_size' => sanitize_text_field($_POST['_custom_text_preview_font_size'][$i][$index]),
+                'font_color' => sanitize_text_field($_POST['_custom_text_preview_font_color'][$i][$index]),
                 'render_on_circle' => isset($_POST['_custom_text_preview_render_on_circle'][$i][$index]) ? 'yes' : 'no',
                 'user_selected_font' => isset($_POST['_custom_text_preview_user_selected_font'][$i][$index]) ? 'yes' : 'no',
                 'image' => sanitize_text_field($_POST['_custom_text_preview_image'][$i][$index])
