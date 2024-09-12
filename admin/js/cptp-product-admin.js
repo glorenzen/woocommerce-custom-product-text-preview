@@ -80,18 +80,6 @@ jQuery(document).ready(function($) {
         $('form.variations_form').trigger('change');
     });
 
-    // Use event delegation to handle change events on input type select elements
-    $(document).on('change', '[id*="_custom_text_preview_input_type"]', function() {
-        var selectedType = $(this).val();
-        var dropdownValuesField = $(this).closest('.cptp-preview-option').find('[class*="_custom_text_preview_dropdown_values"]');
-
-        if (selectedType === 'dropdown') {
-            dropdownValuesField.show();
-        } else {
-            dropdownValuesField.hide();
-        }
-    });
-
     // Use event delegation to handle click events on upload image buttons
     $(document).on('click', '.cptp-upload-image-button', function(e) {
         e.preventDefault();
@@ -125,7 +113,4 @@ jQuery(document).ready(function($) {
         // Finally, open the modal
         frame.open();
     });
-
-    // Trigger change event on page load to show/hide dropdown values fields
-    $('[id*="_custom_text_preview_input_type"]').trigger('change');
 });
