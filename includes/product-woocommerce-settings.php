@@ -31,48 +31,80 @@ function cptp_add_custom_text_preview_options_variation($loop, $variation_data, 
         foreach ($preview_options as $index => $option) {
             echo '<div class="cptp-preview-option">';
             echo '<h4>' . __('Preview Option', 'woocommerce') . ' ' . ($index + 1) . '</h4>';
-            woocommerce_wp_select(array(
-                'id' => '_custom_text_preview_input_type[' . $loop . '][' . $index . ']',
-                'label' => __('Input Type', 'woocommerce'),
-                'options' => array(
-                    'text' => __('Text Input', 'woocommerce'),
-                    'dropdown' => __('Dropdown', 'woocommerce')
-                ),
-                'value' => isset($option['input_type']) ? $option['input_type'] : ''
-            ));
-            woocommerce_wp_text_input(array(
-                'id' => '_custom_text_preview_label[' . $loop . '][' . $index . ']',
-                'label' => __('Label', 'woocommerce'),
-                'value' => isset($option['label']) ? $option['label'] : ''
-            ));
-            woocommerce_wp_text_input(array(
-                'id' => '_custom_text_preview_dropdown_values[' . $loop . '][' . $index . ']',
-                'label' => __('Dropdown Values (comma separated)', 'woocommerce'),
-                'value' => isset($option['dropdown_values']) ? $option['dropdown_values'] : '',
-                'class' => 'cptp-dropdown-values',
-            ));
-            woocommerce_wp_text_input(array(
-                'id' => '_custom_text_preview_font_size[' . $loop . '][' . $index . ']',
-                'label' => __('Font Size', 'woocommerce'),
-                'value' => isset($option['font_size']) ? $option['font_size'] : ''
-            ));
-            woocommerce_wp_checkbox(array(
-                'id' => '_custom_text_preview_render_on_circle[' . $loop . '][' . $index . ']',
-                'label' => __('Render on Circle', 'woocommerce'),
-                'value' => isset($option['render_on_circle']) ? $option['render_on_circle'] : ''
-            ));
-            woocommerce_wp_checkbox(array(
-                'id' => '_custom_text_preview_user_selected_font[' . $loop . '][' . $index . ']',
-                'label' => __('User Selected Font', 'woocommerce'),
-                'value' => isset($option['user_selected_font']) ? $option['user_selected_font'] : ''
-            ));
             ?>
-            <p class="form-field">
-                <label for="_custom_text_preview_image_<?php echo $loop; ?>_<?php echo $index; ?>"><?php _e('Image', 'woocommerce'); ?></label>
-                <input type="hidden" id="_custom_text_preview_image_<?php echo $loop; ?>_<?php echo $index; ?>" name="_custom_text_preview_image[<?php echo $loop; ?>][<?php echo $index; ?>]" value="<?php echo isset($option['image']) ? esc_attr($option['image']) : ''; ?>" />
-                <button type="button" class="button cptp-upload-image-button" data-target="#_custom_text_preview_image_<?php echo $loop; ?>_<?php echo $index; ?>"><?php _e('Select Image', 'woocommerce'); ?></button>
-                <span class="cptp-image-preview"><?php echo isset($option['image']) ? '<img src="' . esc_url($option['image']) . '" style="max-width:100px;" />' : ''; ?></span>
-            </p>
+            <div class="form-row form-row-first">
+                <?php
+                woocommerce_wp_select(array(
+                    'id' => '_custom_text_preview_input_type[' . $loop . '][' . $index . ']',
+                    'label' => __('Input Type', 'woocommerce'),
+                    'options' => array(
+                        'text' => __('Text Input', 'woocommerce'),
+                        'dropdown' => __('Dropdown', 'woocommerce')
+                    ),
+                    'value' => isset($option['input_type']) ? $option['input_type'] : ''
+                ));
+                ?>
+            </div>
+            <div class="form-row form-row-last">
+                <?php
+                woocommerce_wp_text_input(array(
+                    'id' => '_custom_text_preview_label[' . $loop . '][' . $index . ']',
+                    'label' => __('Label', 'woocommerce'),
+                    'value' => isset($option['label']) ? $option['label'] : ''
+                ));
+                ?>
+            </div>
+            <div class="form-row">
+                <?php
+                woocommerce_wp_text_input(array(
+                    'id' => '_custom_text_preview_dropdown_values[' . $loop . '][' . $index . ']',
+                    'label' => __('Dropdown Values (comma separated)', 'woocommerce'),
+                    'value' => isset($option['dropdown_values']) ? $option['dropdown_values'] : '',
+                    'class' => 'cptp-dropdown-values',
+                ));
+                ?>
+            </div>
+            <div class="form-row">
+                <?php
+                woocommerce_wp_text_input(array(
+                    'id' => '_custom_text_preview_font_size[' . $loop . '][' . $index . ']',
+                    'label' => __('Font Size', 'woocommerce'),
+                    'value' => isset($option['font_size']) ? $option['font_size'] : ''
+                ));
+                ?>
+            </div>
+            <div class="form-row">
+                <?php
+                woocommerce_wp_checkbox(array(
+                    'id' => '_custom_text_preview_render_on_circle[' . $loop . '][' . $index . ']',
+                    'label' => __('Render on Circle', 'woocommerce'),
+                    'value' => isset($option['render_on_circle']) ? $option['render_on_circle'] : ''
+                ));
+                ?>
+            </div>
+            <div class="form-row">
+                <?php
+                woocommerce_wp_checkbox(array(
+                    'id' => '_custom_text_preview_user_selected_font[' . $loop . '][' . $index . ']',
+                    'label' => __('User Selected Font', 'woocommerce'),
+                    'value' => isset($option['user_selected_font']) ? $option['user_selected_font'] : ''
+                ));
+                ?>
+            </div>
+            <div class="form-row">
+                <div class="form-field-wrapper">
+                    <p class="form-field form-field-wide">
+                        <label for="_custom_text_preview_image_<?php echo $loop; ?>_<?php echo $index; ?>"><?php _e('Image', 'woocommerce'); ?></label>
+                        <input type="hidden" id="_custom_text_preview_image_<?php echo $loop; ?>_<?php echo $index; ?>" name="_custom_text_preview_image[<?php echo $loop; ?>][<?php echo $index; ?>]" value="<?php echo isset($option['image']) ? esc_attr($option['image']) : ''; ?>" />
+                    </p>
+                    <p class="form-field form-field-wide">
+                        <button type="button" class="button cptp-upload-image-button" data-target="#_custom_text_preview_image_<?php echo $loop; ?>_<?php echo $index; ?>"><?php _e('Select Image', 'woocommerce'); ?></button>
+                    </p>
+                    <p class="form-field form-field-wide">
+                        <span class="cptp-image-preview"><?php echo isset($option['image']) ? '<img src="' . esc_url($option['image']) . '" style="max-width:100px;" />' : ''; ?></span>
+                    </p>
+                </div>
+            </div>
             <?php
             if ($index > 0) {
                 echo '<button type="button" class="button cptp-delete-preview-button">' . __('Delete Preview', 'woocommerce') . '</button>';
