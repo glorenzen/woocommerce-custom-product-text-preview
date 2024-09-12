@@ -141,7 +141,7 @@ jQuery(document).ready(function ($) {
                 const inputType = option.input_type || 'text';
                 const label = option.label || '';
                 const userSelectedFont = option.user_selected_font || 'no';
-                const dropdownOptions = option.dropdown_values || '';
+                const dropdownOptions = (option.dropdown_values || '').split(',').map(value => value.trim());
 
                 var newOption = `
                     <div class="cptp-input-wrapper">
