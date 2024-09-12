@@ -4,7 +4,7 @@ Plugin Name: Custom Product Text Preview
 Description: Allows users to customize text on WooCommerce products and preview it before purchase.
 Version: 1.0.0
 Author: Greg Lorenzen
-Requires Plugins: advanced-custom-fields, woocommerce
+Requires Plugins: woocommerce
 */
 
 // Exit if accessed directly
@@ -19,7 +19,6 @@ define('CPTP_PLUGIN_URL', plugin_dir_url(__FILE__));
 // Include required files
 require_once CPTP_PLUGIN_DIR . 'admin/class-cptp-admin.php';
 require_once CPTP_PLUGIN_DIR . 'public/class-cptp-public.php';
-require_once CPTP_PLUGIN_DIR . 'includes/product-acf-fields.php';
 require_once CPTP_PLUGIN_DIR . 'includes/product-woocommerce-settings.php';
 require_once CPTP_PLUGIN_DIR . 'includes/class-cptp-public-api.php';
 

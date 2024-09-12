@@ -21,11 +21,6 @@ class CPTP_Public {
         wp_enqueue_style('cptp-public', plugin_dir_url(__FILE__) . 'css/cptp-public.css', array(), date("h:i:s"));
         wp_enqueue_script('cptp-public-js', plugin_dir_url(__FILE__) . 'js/cptp-public.js', array('jquery'), date("h:i:s"), true);
 
-        $acf_fields = array(
-            'font_size_group' => get_field('font_size_group'),
-            'font_color_group' => get_field('font_color_group'),
-            'field_name_text_preview_image' => get_field('field_name_text_preview_image'),
-        );
         $logo_font_mapping = array(
             'default' => 'Vast Shadow',
             'Carpenters' => 'Monoton',
@@ -34,7 +29,6 @@ class CPTP_Public {
         wp_localize_script('cptp-public-js', 'cptp_values', array(
             'ajax_url' => admin_url('admin-ajax.php'),
             'post_id' => get_the_ID(),
-            'acf_fields' => $acf_fields,
             'logo_font_mapping' => $logo_font_mapping,
         ));
     }
