@@ -147,7 +147,7 @@ jQuery(document).ready(function ($) {
                 var newOption = `
                     <div class="cptp-input-wrapper">
                         <label for="cptp-custom-text-${variationId}-${index}" class="cptp-form-label">${label}</label>
-                        ${inputType === 'text' ? `<input type="text" id="cptp-custom-text-${variationId}-${index}" name="cptp-custom_text[${variationId}][${index}]" class="cptp-form-control" value="" maxLength="${customTextMaxLength}" />` : ''}
+                        ${inputType === 'text' ? `<input type="text" id="cptp-custom-text-${variationId}-${index}" name="cptp-custom_text[${variationId}][${index}]" class="cptp-form-control" value="" maxLength="${settings.custom_text_max_length}" />` : ''}
                         ${inputType === 'dropdown' ? `<select id="cptp-custom-text-${variationId}-${index}" name="cptp-custom_text[${variationId}][${index}]" class="cptp-form-control">${dropdownOptions.map(dropdownOption => `<option value="${dropdownOption}">${dropdownOption}</option>`).join('')}</select>` : ''}
                     </div>
                 `;
