@@ -38,13 +38,7 @@ class CPTP_Public_API {
             'x_coordinate' => get_option('cptp_x_coordinate'),
             'y_coordinate' => get_option('cptp_y_coordinate'),
             'circle_width' => get_option('cptp_circle_width'),
-            'preview_image' => get_option('cptp_preview_image'),
-            'custom_text' => get_option('cptp_custom_text'),
-            'logo_font_size' => get_option('cptp_logo_font_size'),
-            'name_font_size' => get_option('cptp_name_font_size'),
-            'font_family' => get_option('cptp_font_family'),
-            'font_color' => get_option('cptp_font_color'),
-            'circle_color' => get_option('cptp_circle_color')
+            'custom_text_max_length' => get_option('cptp_custom_text_max_length'),
         );
 
         return new WP_REST_Response($settings, 200);

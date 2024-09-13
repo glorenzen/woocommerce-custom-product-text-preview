@@ -26,34 +26,41 @@ class CPTP_Admin {
     }
 
     public function register_settings() {
+        // Register settings
         register_setting('cptp_settings_group', 'cptp_x_coordinate');
         register_setting('cptp_settings_group', 'cptp_y_coordinate');
         register_setting('cptp_settings_group', 'cptp_circle_width');
+        register_setting('cptp_settings_group', 'cptp_custom_text_max_length');
         register_setting('cptp_settings_group', 'cptp_preview_image');
         register_setting('cptp_settings_group', 'cptp_custom_text');
-        register_setting('cptp_settings_group', 'cptp_custom_text_max_length');
-        register_setting('cptp_settings_group', 'cptp_logo_font_size');
-        register_setting('cptp_settings_group', 'cptp_name_font_size');
+        register_setting('cptp_settings_group', 'cptp_preview_font_size');
         register_setting('cptp_settings_group', 'cptp_font_family');
         register_setting('cptp_settings_group', 'cptp_font_color');
         register_setting('cptp_settings_group', 'cptp_circle_color');
-        register_setting('cptp_settings_group', 'cptp_name_text_label');
-        register_setting('cptp_settings_group', 'cptp_name_font_label');
-        register_setting('cptp_settings_group', 'cptp_logo_text_label');
 
+        // Add Global Settings section
         add_settings_section(
-            'cptp_settings_section',
+            'cptp_global_settings_section',
             'Global Customization Settings',
             null,
             'cptp-settings'
         );
 
+        // Add Preview Options section
+        add_settings_section(
+            'cptp_preview_options_section',
+            'Preview Options',
+            array($this, 'preview_options_section_callback'),
+            'cptp-settings'
+        );
+
+        // Add settings fields to Global Settings section
         add_settings_field(
             'cptp_x_coordinate',
             'X-Coordinate',
             array($this, 'x_coordinate_callback'),
             'cptp-settings',
-            'cptp_settings_section'
+            'cptp_global_settings_section'
         );
 
         add_settings_field(
@@ -61,7 +68,7 @@ class CPTP_Admin {
             'Y-Coordinate',
             array($this, 'y_coordinate_callback'),
             'cptp-settings',
-            'cptp_settings_section'
+            'cptp_global_settings_section'
         );
 
         add_settings_field(
@@ -69,23 +76,7 @@ class CPTP_Admin {
             'Circle Width',
             array($this, 'circle_width_callback'),
             'cptp-settings',
-            'cptp_settings_section'
-        );
-
-        add_settings_field(
-            'cptp_preview_image',
-            'Preview Image',
-            array($this, 'preview_image_callback'),
-            'cptp-settings',
-            'cptp_settings_section'
-        );
-
-        add_settings_field(
-            'cptp_custom_text',
-            'Custom Text',
-            array($this, 'custom_text_callback'),
-            'cptp-settings',
-            'cptp_settings_section'
+            'cptp_global_settings_section'
         );
 
         add_settings_field(
@@ -93,23 +84,32 @@ class CPTP_Admin {
             'Custom Text Max Length',
             array($this, 'cptp_custom_text_max_length_callback'),
             'cptp-settings',
-            'cptp_settings_section'
+            'cptp_global_settings_section'
+        );
+
+        // Add settings fields to Preview Options section
+        add_settings_field(
+            'cptp_preview_image',
+            'Preview Image',
+            array($this, 'preview_image_callback'),
+            'cptp-settings',
+            'cptp_preview_options_section'
         );
 
         add_settings_field(
-            'cptp_logo_font_size',
-            'Logo Text Font Size',
-            array($this, 'logo_font_size_callback'),
+            'cptp_custom_text',
+            'Custom Text',
+            array($this, 'custom_text_callback'),
             'cptp-settings',
-            'cptp_settings_section'
+            'cptp_preview_options_section'
         );
 
         add_settings_field(
-            'cptp_name_font_size',
-            'Name Font Size',
-            array($this, 'name_font_size_callback'),
+            'cptp_preview_font_size',
+            'Preview Text Font Size',
+            array($this, 'preview_font_size_callback'),
             'cptp-settings',
-            'cptp_settings_section'
+            'cptp_preview_options_section'
         );
 
         add_settings_field(
@@ -117,7 +117,7 @@ class CPTP_Admin {
             'Font Family',
             array($this, 'font_family_callback'),
             'cptp-settings',
-            'cptp_settings_section'
+            'cptp_preview_options_section'
         );
 
         add_settings_field(
@@ -125,7 +125,7 @@ class CPTP_Admin {
             'Font Color',
             array($this, 'font_color_callback'),
             'cptp-settings',
-            'cptp_settings_section'
+            'cptp_preview_options_section'
         );
 
         add_settings_field(
@@ -133,36 +133,16 @@ class CPTP_Admin {
             'Circle Color',
             array($this, 'circle_color_callback'),
             'cptp-settings',
-            'cptp_settings_section'
-        );
-
-        add_settings_field(
-            'cptp_name_text_label',
-            'Name Text Label',
-            array($this, 'name_text_label_callback'),
-            'cptp-settings',
-            'cptp_settings_section'
-        );
-
-        add_settings_field(
-            'cptp_name_font_label',
-            'Name Font Label',
-            array($this, 'name_font_label_callback'),
-            'cptp-settings',
-            'cptp_settings_section'
-        );
-
-        add_settings_field(
-            'cptp_logo_text_label',
-            'Logo Text Label',
-            array($this, 'logo_text_label_callback'),
-            'cptp-settings',
-            'cptp_settings_section'
+            'cptp_preview_options_section'
         );
     }
 
     public function create_admin_page() {
         include_once CPTP_PLUGIN_DIR . 'admin/partials/cptp-admin-display.php';
+    }
+
+    public function preview_options_section_callback() {
+        echo '<p>All of these options are for preview only and will not affect product display.</p>';
     }
 
     public function x_coordinate_callback() {
@@ -189,7 +169,6 @@ class CPTP_Admin {
     public function custom_text_callback() {
         $custom_text = get_option('cptp_custom_text');
         echo '<input type="text" name="cptp_custom_text" value="' . esc_attr($custom_text) . '" />';
-        echo '<p class="description">This text is for preview purposes only and will not be shown on the front end.</p>';
     }
 
     public function cptp_custom_text_max_length_callback() {
@@ -197,14 +176,9 @@ class CPTP_Admin {
         echo '<input type="number" id="cptp_custom_text_max_length" name="cptp_custom_text_max_length" value="' . esc_attr($value) . '" />';
     }
 
-    public function logo_font_size_callback() {
-        $value = get_option('cptp_logo_font_size', '');
-        echo '<input type="number" id="cptp_logo_font_size" name="cptp_logo_font_size" value="' . esc_attr($value) . '" />';
-    }
-
-    public function name_font_size_callback() {
-        $value = get_option('cptp_name_font_size', '');
-        echo '<input type="number" id="cptp_name_font_size" name="cptp_name_font_size" value="' . esc_attr($value) . '" />';
+    public function preview_font_size_callback() {
+        $value = get_option('cptp_preview_font_size', '');
+        echo '<input type="number" id="cptp_preview_font_size" name="cptp_preview_font_size" value="' . esc_attr($value) . '" />';
     }
 
     public function font_family_callback() {
@@ -220,27 +194,12 @@ class CPTP_Admin {
     public function circle_color_callback() {
         $value = get_option('cptp_circle_color', '');
         echo '<input type="color" id="cptp_circle_color" name="cptp_circle_color" value="' . esc_attr($value) . '" />';
-        echo '<p class="description">This color is for preview purposes only and will not be shown on the front end.</p>';
-    }
-
-    public function name_text_label_callback() {
-        $value = get_option('cptp_name_text_label', 'Name Text');
-        echo '<input type="text" id="cptp_name_text_label" name="cptp_name_text_label" value="' . esc_attr($value) . '" />';
-    }
-    
-    public function name_font_label_callback() {
-        $value = get_option('cptp_name_font_label', 'Name Font');
-        echo '<input type="text" id="cptp_name_font_label" name="cptp_name_font_label" value="' . esc_attr($value) . '" />';
-    }
-    
-    public function logo_text_label_callback() {
-        $value = get_option('cptp_logo_text_label', 'Logo Text');
-        echo '<input type="text" id="cptp_logo_text_label" name="cptp_logo_text_label" value="' . esc_attr($value) . '" />';
     }
 
     public function enqueue_admin_scripts() {
         wp_enqueue_media();
         wp_enqueue_style('cptp-admin', CPTP_PLUGIN_URL . 'admin/css/cptp-admin.css', null, date("h:i:s"));
         wp_enqueue_script('cptp-admin', CPTP_PLUGIN_URL . 'admin/js/cptp-admin.js', array('jquery'), date("h:i:s"), true);
+        wp_enqueue_script('cptp-product-admin', CPTP_PLUGIN_URL . 'admin/js/cptp-product-admin.js', array('jquery'), date("h:i:s"), true);
     }
 }
