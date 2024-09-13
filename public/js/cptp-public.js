@@ -147,8 +147,8 @@ jQuery(document).ready(function ($) {
                 var newOption = `
                     <div class="cptp-input-wrapper">
                         <label for="cptp-custom-text-${variationId}-${index}" class="cptp-form-label">${label}</label>
-                        ${inputType === 'text' ? `<input type="text" id="cptp-custom-text-${variationId}-${index}" name="cptp-custom_text[${variationId}][${index}]" class="cptp-form-control" value="" maxLength="${settings.custom_text_max_length}" />` : ''}
-                        ${inputType === 'dropdown' ? `<select id="cptp-custom-text-${variationId}-${index}" name="cptp-custom_text[${variationId}][${index}]" class="cptp-form-control">${dropdownOptions.map(dropdownOption => `<option value="${dropdownOption}">${dropdownOption}</option>`).join('')}</select>` : ''}
+                        ${inputType === 'text' ? `<input type="text" id="cptp-custom-text-${variationId}-${index}" name="cptp-custom-text-${variationId}-${index}" data-label="${label}" class="cptp-form-control" value="" maxLength="${settings.custom_text_max_length}" />` : ''}
+                        ${inputType === 'dropdown' ? `<select id="cptp-custom-text-${variationId}-${index}" name="cptp-custom-text-${variationId}-${index}" data-label="${label}" class="cptp-form-control">${dropdownOptions.map(dropdownOption => `<option value="${dropdownOption}">${dropdownOption}</option>`).join('')}</select>` : ''}
                     </div>
                 `;
 
@@ -156,7 +156,7 @@ jQuery(document).ready(function ($) {
                     newOption += `
                         <div class="cptp-input-wrapper">
                             <label for="cptp-font-select-${variationId}-${index}" class="cptp-form-label">${option.label} - Custom Font</label>
-                            <select id="cptp-font-select-${variationId}-${index}" name="cptp-font-select[${variationId}][${index}]" class="cptp-form-control">
+                            <select id="cptp-font-select-${variationId}-${index}" name="cptp-font-select-${variationId}-${index}" data-label="${option.label} - Custom Font" class="cptp-form-control">
                                 ${fontOptions.map(font => `<option value="${font}">${font}</option>`).join('')}
                             </select>
                         </div>
@@ -188,23 +188,29 @@ jQuery(document).ready(function ($) {
 
     // Capture custom text value on add to cart
     $("form.cart").on("submit", function () {
-        let customCityText = $(".cptp-product-custom-text #cptp-custom-city-text").val();
-        let customNameText = $(".cptp-product-custom-text #cptp-custom-name-text").val();
-        let selectedNameFont = $("#cptp-name-font option:selected").text();
+        // Capture all available inputs for the currently selected variation
+        const previewOptions = $(".cptp-input-wrapper input, .cptp-input-wrapper select");
 
-        $("<input />").attr("type", "hidden")
-            .attr("name", "cptp_custom_city_text")
-            .attr("value", customCityText)
-            .appendTo(this);
+        let previewOptionsData = [];
 
-        $("<input />").attr("type", "hidden")
-            .attr("name", "cptp_custom_name_text")
-            .attr("value", customNameText)
-            .appendTo(this);
+        previewOptions.each(function() {
+            const input = $(this);
+            const inputName = input.attr("name");
+            const label = input.data("label");
+            const inputValue = input.val();
 
-        $("<input />").attr("type", "hidden")
-            .attr("name", "cptp_selected_name_font")
-            .attr("value", selectedNameFont)
-            .appendTo(this);
+            previewOptionsData.push({
+                name: inputName,
+                label: label,
+                value: inputValue
+            });
+        });
+
+        const previewOptionsJson = JSON.stringify(previewOptionsData);
+
+            $("<input />").attr("type", "hidden")
+                .attr("name", "preview_options_data")
+                .attr("value", previewOptionsJson)
+                .appendTo(this);
     });
 });

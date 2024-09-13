@@ -14,7 +14,6 @@ class CPTP_Public {
         add_filter('woocommerce_add_cart_item_data', array($this, 'add_custom_text_to_cart_item'), 10, 2);
         add_filter('woocommerce_get_item_data', array($this, 'display_custom_text_in_cart'), 10, 2);
         add_action('woocommerce_checkout_create_order_line_item', array($this, 'save_custom_text_to_order_items'), 10, 4);
-        add_filter('woocommerce_order_item_display_meta_key', array($this, 'display_custom_text_in_order_meta'), 10, 3);
     }
 
     public function enqueue_public_scripts() {
@@ -42,63 +41,40 @@ class CPTP_Public {
     }
 
     public function add_custom_text_to_cart_item($cart_item_data, $product_id) {
-        if (isset($_POST['cptp_custom_name_text'])) {
-            $cart_item_data['cptp_custom_name_text'] = sanitize_text_field($_POST['cptp_custom_name_text']);
+        if (isset($_POST['preview_options_data'])) {
+            $preview_options_data = json_decode(stripslashes($_POST['preview_options_data']), true);
+            if (is_array($preview_options_data)) {
+                foreach ($preview_options_data as $option) {
+                    $name = sanitize_text_field($option['name']);
+                    $label = sanitize_text_field($option['label']);
+                    $value = sanitize_text_field($option['value']);
+                    $cart_item_data['preview_options'][$name] = array(
+                        'label' => $label,
+                        'value' => $value
+                    );
+                }
+            }
         }
-        if (isset($_POST['cptp_custom_city_text'])) {
-            $cart_item_data['cptp_custom_city_text'] = sanitize_text_field($_POST['cptp_custom_city_text']);
-        }
-        if (isset($_POST['cptp_selected_name_font'])) {
-            $cart_item_data['cptp_selected_name_font'] = sanitize_text_field($_POST['cptp_selected_name_font']);
-        }
+
         return $cart_item_data;
     }
 
     public function display_custom_text_in_cart($item_data, $cart_item) {
-        if (isset($cart_item['cptp_custom_name_text'])) {
-            $item_data[] = array(
-                'key' => __('Custom Name Text', 'cptp'),
-                'value' => wc_clean($cart_item['cptp_custom_name_text']),
-            );
-        }
-        if (isset($cart_item['cptp_custom_city_text'])) {
-            $item_data[] = array(
-                'key' => __('Custom Logo Text', 'cptp'),
-                'value' => wc_clean($cart_item['cptp_custom_city_text']),
-            );
-        }
-        if (isset($cart_item['cptp_selected_name_font'])) {
-            $item_data[] = array(
-                'key' => __('Name Font', 'cptp'),
-                'value' => wc_clean($cart_item['cptp_selected_name_font']),
-            );
+        if (isset($cart_item['preview_options']) && is_array($cart_item['preview_options'])) {
+            foreach ($cart_item['preview_options'] as $name => $option) {
+                $item_data[] = array(
+                    'key' => wc_clean($option['label']),
+                    'value' => wc_clean($option['value']),
+                );
+            }
         }
         return $item_data;
     }
     public function save_custom_text_to_order_items($item, $cart_item_key, $values, $order) {
-        if (!empty($values['cptp_selected_name_font'])) {
-            $item->add_meta_data(__('Selected Name Font','cptp'), $values['cptp_selected_name_font']);
+        if (isset($values['preview_options']) && is_array($values['preview_options'])) {
+            foreach ($values['preview_options'] as $name => $option) {
+                $item->add_meta_data(wc_clean($option['label']), wc_clean($option['value']));
+            }
         }
-        
-        if (!empty($values['cptp_custom_name_text'])) {
-            $item->add_meta_data(__('Custom Name Text','cptp'), sanitize_text_field($values['cptp_custom_name_text']));
-        }
-
-        if (!empty($values['cptp_custom_city_text'])) {
-            $item->add_meta_data(__('Custom City Text','cptp'), sanitize_text_field($values['cptp_custom_city_text']));
-        }
-    }
-
-    public function display_custom_text_in_order_meta($display_key, $meta, $item) {
-        if ($meta->key === __('Custom Name Text','cptp')) {
-            $display_key = 'Custom Name Text';
-        }
-        else if ($meta->key === __('Custom City Text','cptp')) {
-            $display_key = 'Custom City Text';
-        }
-        else if ($meta->key === __('Selected Name Font','cptp')) {
-            $display_key = 'Selected Name Font';
-        }
-        return $display_key;
     }
 }
