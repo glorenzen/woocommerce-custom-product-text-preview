@@ -82,6 +82,7 @@ jQuery(document).ready(function($) {
     $(document).on('click', '.cptp-delete-preview-button', function() {
         $(this).closest('.cptp-preview-option').remove();
 
+        // TODO: Fix save not avaiable after deleting preview option
         // Trigger change event on the form to enable the save button
         $('form.variations_form').trigger('change');
     });
