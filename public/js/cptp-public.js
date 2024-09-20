@@ -141,6 +141,7 @@ jQuery(document).ready(function ($) {
             previewOptions.forEach(function(option, index) {
                 const inputType = option.input_type || 'text';
                 const label = option.label || '';
+                const description = option.description || '';
                 const userSelectedFont = option.user_selected_font || 'no';
                 const dropdownOptions = (option.dropdown_values || '').split(',').map(value => value.trim());
 
@@ -151,6 +152,15 @@ jQuery(document).ready(function ($) {
                         ${inputType === 'dropdown' ? `<select id="cptp-custom-text-${variationId}-${index}" name="cptp-custom-text-${variationId}-${index}" data-label="${label}" class="cptp-form-control">${dropdownOptions.map(dropdownOption => `<option value="${dropdownOption}">${dropdownOption}</option>`).join('')}</select>` : ''}
                     </div>
                 `;
+
+                // Conditionally render the description field if it is not empty
+                if (description) {
+                    newOption += `
+                        <div class="cptp-input-wrapper">
+                            <p class="cptp-preview-description">${description}</p>
+                        </div>
+                    `;
+                }
 
                 if (userSelectedFont === 'yes') {
                     newOption += `
@@ -208,9 +218,9 @@ jQuery(document).ready(function ($) {
 
         const previewOptionsJson = JSON.stringify(previewOptionsData);
 
-            $("<input />").attr("type", "hidden")
-                .attr("name", "preview_options_data")
-                .attr("value", previewOptionsJson)
-                .appendTo(this);
+        $("<input />").attr("type", "hidden")
+            .attr("name", "preview_options_data")
+            .attr("value", previewOptionsJson)
+            .appendTo(this);
     });
 });
