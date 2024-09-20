@@ -23,11 +23,21 @@ function cptp_add_custom_text_preview_options_variation($loop, $variation_data, 
     $has_custom_text_preview = get_post_meta($variation->ID, '_has_custom_text_preview', true);
     if ($has_custom_text_preview === 'yes') {
         $preview_options = get_post_meta($variation->ID, '_custom_text_preview_options', true);
+        $preview_title = get_post_meta($variation->ID, '_custom_text_preview_title', true);
         if (empty($preview_options)) {
             $preview_options = array(array());
         }
 
         echo '<div class="cptp-preview-options-wrapper">';
+
+        echo '<div class="form-row form-row-full">';
+        woocommerce_wp_text_input(array(
+            'id' => '_custom_text_preview_title[' . $loop . ']',
+            'label' => __('Preview Options Title', 'woocommerce'),
+            'value' => isset($preview_title) ? $preview_title : ''
+        ));
+        echo '</div>';
+
         foreach ($preview_options as $index => $option) {
             echo '<div class="cptp-preview-option">';
             echo '<h4>' . __('Preview Option', 'woocommerce') . ' ' . ($index + 1) . '</h4>';
@@ -143,7 +153,11 @@ function cptp_save_custom_text_preview_options_variation($variation_id, $i) {
         update_post_meta( $variation_id, '_has_custom_text_preview', 'yes' );
     } else {
         update_post_meta( $variation_id, '_has_custom_text_preview', 'no' ); 
-    }   
+    }  
+    
+    if (isset($_POST['_custom_text_preview_title'][$i])) {
+        update_post_meta($variation_id, '_custom_text_preview_title', sanitize_text_field($_POST['_custom_text_preview_title'][$i]));
+    }
 
     $preview_options = array();
     if (isset($_POST['_custom_text_preview_input_type'][$i])) {
