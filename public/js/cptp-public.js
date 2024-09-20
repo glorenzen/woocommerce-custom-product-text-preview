@@ -137,7 +137,13 @@ jQuery(document).ready(function ($) {
         container.empty();
 
         if (variationPreviewOptions.hasOwnProperty(variationId)) {
-            let previewOptions = variationPreviewOptions[variationId];
+            let previewOptions = variationPreviewOptions[variationId].options;
+            let previewTitle = variationPreviewOptions[variationId].title || '';
+
+            if (previewTitle) {
+                container.append(`<h3 class="cptp-options-title">${previewTitle}</h3>`);
+            }
+
             previewOptions.forEach(function(option, index) {
                 const inputType = option.input_type || 'text';
                 const label = option.label || '';
