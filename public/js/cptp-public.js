@@ -78,7 +78,7 @@ jQuery(document).ready(function ($) {
         const variationId = selectedVariationId;
         const index = button.attr('id').split('-').pop();
 
-        const imageUrl = variationPreviewOptions[variationId][index].image;
+        const imageUrl = variationPreviewOptions[variationId].options[index].image;
 
         const imgElement = new Image();
         imgElement.src = imageUrl;
@@ -96,9 +96,9 @@ jQuery(document).ready(function ($) {
 
             canvas.add(image);
 
-            const renderOnCircle = variationPreviewOptions[variationId][index].render_on_circle === 'yes' ? true : false;
-            const fontSize = variationPreviewOptions[variationId][index].font_size;
-            const fontColor = variationPreviewOptions[variationId][index].font_color;
+            const renderOnCircle = variationPreviewOptions[variationId].options[index].render_on_circle === 'yes' ? true : false;
+            const fontSize = variationPreviewOptions[variationId].options[index].font_size;
+            const fontColor = variationPreviewOptions[variationId].options[index].font_color;
 
             const fontSelect = $(`#cptp-font-select-${variationId}-${index}`);
 
