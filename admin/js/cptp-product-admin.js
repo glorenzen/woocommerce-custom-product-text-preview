@@ -24,6 +24,12 @@ jQuery(document).ready(function($) {
                     </p>
                 </div>
                 <div class="form-row">
+                    <p class="form-field">
+                        <label for="_custom_text_preview_description[${loop}][${index}]">Description</label>
+                        <input type="text" id="_custom_text_preview_description[${loop}][${index}]" name="_custom_text_preview_description[${loop}][${index}]" value="">
+                    </p>
+                </div>
+                <div class="form-row">
                     <p class="form-field _custom_text_preview_dropdown_values[${loop}][${index}]_field">
                         <label for="_custom_text_preview_dropdown_values[${loop}][${index}]">Dropdown Values (comma separated)</label>
                         <input type="text" id="_custom_text_preview_dropdown_values[${loop}][${index}]" name="_custom_text_preview_dropdown_values[${loop}][${index}]" value="">
