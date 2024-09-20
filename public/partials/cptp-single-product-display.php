@@ -12,8 +12,12 @@ foreach ($variations as $variation) {
     $has_custom_text_preview = get_post_meta($variation_id, '_has_custom_text_preview', true);
     if ($has_custom_text_preview === 'yes') {
         $preview_options = get_post_meta($variation_id, '_custom_text_preview_options', true);
+        $preview_title = get_post_meta($variation_id, '_custom_text_preview_title', true);
         if (!empty($preview_options)) {
-            $variation_preview_options[$variation_id] = $preview_options;
+            $variation_preview_options[$variation_id] = array(
+                'title' => $preview_title,
+                'options' => $preview_options
+            );
         }
     }
 }
