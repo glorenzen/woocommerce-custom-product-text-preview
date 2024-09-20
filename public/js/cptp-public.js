@@ -151,7 +151,15 @@ jQuery(document).ready(function ($) {
                 const userSelectedFont = option.user_selected_font || 'no';
                 const dropdownOptions = (option.dropdown_values || '').split(',').map(value => value.trim());
 
-                var newOption = `
+                let newOption = '';
+
+                if (description) {
+                    newOption += `       
+                        <p class="cptp-preview-description">${description}</p>
+                    `;
+                }
+
+                newOption += `
                     <div class="cptp-input-wrapper">
                         <label for="cptp-custom-text-${variationId}-${index}" class="cptp-form-label">${label}</label>
                         ${inputType === 'text' ? `<input type="text" id="cptp-custom-text-${variationId}-${index}" name="cptp-custom-text-${variationId}-${index}" data-label="${label}" class="cptp-form-control" value="" maxLength="${settings.custom_text_max_length}" />` : ''}
@@ -159,14 +167,6 @@ jQuery(document).ready(function ($) {
                     </div>
                 `;
 
-                // Conditionally render the description field if it is not empty
-                if (description) {
-                    newOption += `
-                        <div class="cptp-input-wrapper">
-                            <p class="cptp-preview-description">${description}</p>
-                        </div>
-                    `;
-                }
 
                 if (userSelectedFont === 'yes') {
                     newOption += `
