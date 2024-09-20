@@ -57,6 +57,15 @@ function cptp_add_custom_text_preview_options_variation($loop, $variation_data, 
             <div class="form-row">
                 <?php
                 woocommerce_wp_text_input(array(
+                    'id' => '_custom_text_preview_description[' . $loop . '][' . $index . ']',
+                    'label' => __('Description', 'woocommerce'),
+                    'value' => isset($option['description']) ? $option['description'] : ''
+                ));
+                ?>
+            </div>
+            <div class="form-row">
+                <?php
+                woocommerce_wp_text_input(array(
                     'id' => '_custom_text_preview_dropdown_values[' . $loop . '][' . $index . ']',
                     'label' => __('Dropdown Values (comma separated)', 'woocommerce'),
                     'value' => isset($option['dropdown_values']) ? $option['dropdown_values'] : '',
@@ -143,6 +152,7 @@ function cptp_save_custom_text_preview_options_variation($variation_id, $i) {
             $preview_options[$index] = array(
                 'input_type' => sanitize_text_field($input_type),
                 'label' => sanitize_text_field($_POST['_custom_text_preview_label'][$i][$index]),
+                'description' => sanitize_text_field($_POST['_custom_text_preview_description'][$i][$index]),
                 'dropdown_values' => $dropdown_values,
                 'font_size' => sanitize_text_field($_POST['_custom_text_preview_font_size'][$i][$index]),
                 'font_color' => sanitize_text_field($_POST['_custom_text_preview_font_color'][$i][$index]),
