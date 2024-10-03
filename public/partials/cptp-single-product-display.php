@@ -2,6 +2,9 @@
 // Set font options
 $font_options = array('Graduate', 'Monoton', 'Vast Shadow', 'Rye', 'UnifrakturMaguntia');
 
+// Get the custom text max length
+$custom_text_max_length = get_option('cptp_custom_text_max_length', 20);
+
 // Retrieve the custom text preview options for each variation
 global $product;
 $variations = $product->get_available_variations();
