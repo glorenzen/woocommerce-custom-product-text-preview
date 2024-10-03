@@ -4,6 +4,11 @@ jQuery(document).ready(function ($) {
     const initialCanvasHeight = canvas.height;
     const modal = $("#cptp-preview-modal");
 
+    // Create hidden input field on document ready
+    const hiddenInput = $("<input />").attr("type", "hidden")
+                                      .attr("name", "preview_options_data")
+                                      .appendTo("form.cart");
+
     function checkVariationsSelected() {
         let allSelected = true;
         $(".variations select").each(function () {
@@ -202,11 +207,9 @@ jQuery(document).ready(function ($) {
         $('.cptp-product-custom-text').hide();
     });
 
-    // Capture custom text value on add to cart
-    $("form.cart").on("submit", function () {
-        // Capture all available inputs for the currently selected variation
+    // Update hidden input field with preview options data
+    $(document).on('change', '.cptp-input-wrapper input, .cptp-input-wrapper select', function() {
         const previewOptions = $(".cptp-input-wrapper input, .cptp-input-wrapper select");
-
         let previewOptionsData = [];
 
         previewOptions.each(function() {
@@ -223,10 +226,6 @@ jQuery(document).ready(function ($) {
         });
 
         const previewOptionsJson = JSON.stringify(previewOptionsData);
-
-        $("<input />").attr("type", "hidden")
-            .attr("name", "preview_options_data")
-            .attr("value", previewOptionsJson)
-            .appendTo(this);
+        hiddenInput.val(previewOptionsJson);
     });
 });
