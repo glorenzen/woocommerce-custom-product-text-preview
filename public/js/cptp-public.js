@@ -39,7 +39,7 @@ jQuery(document).ready(function ($) {
     }
 
     function setLogoFontFamily() {
-        const selectedLogo = $('#pa_local-logo option:selected').text();
+        const selectedLogo = $('#pa_craft-logo option:selected').text();
         const fontFamily = cptp_values.logo_font_mapping[selectedLogo] || cptp_values.logo_font_mapping['default'];
         return fontFamily;
     }
